@@ -1,0 +1,1 @@
+Produce a deterministic release-check plan for a strict JSON configuration loader. Require unknown-field rejection, exact grok-4.5 model IDs for active direct seats, plaintext-secret rejection, environment-variable key-name preservation, and an unambiguous machine-readable pass/fail result. Do not mutate the workspace.

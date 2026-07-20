@@ -1,0 +1,93 @@
+{
+  "attempts": [
+    {
+      "anonymous_label": "",
+      "attempt_ids": [
+        "8e559fab3927d1c64e35ca6e5f60e3ff5edf2d90a3426236b4298ad6a7442235",
+        "ef17292862574e9252ae7ad49539fc61d0151223572d1086d8b69ae6128b4acd",
+        "e337824606b0377b179c8cfaf86039bb316de6050529b569b940a723e6e3aafc"
+      ],
+      "error": "grok-4.5: Provider transport failure: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_researcher",
+      "status": "failed"
+    },
+    {
+      "anonymous_label": "",
+      "attempt_ids": [
+        "7dfeddd26d906675607a0a9ca3c10604127d2a6d19e2771cdb452ad5a293c922",
+        "a508bb43b13c71bddba58186fd74fc572e2fd1b2f607d8f8988ec7164584c721",
+        "e2cc9c7a19816aa884443d4fe4c0eabf8fb2c9209a48bca776da10fb6904efb8"
+      ],
+      "error": "grok-4.5: Provider transport failure: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_adversary",
+      "status": "failed"
+    },
+    {
+      "anonymous_label": "",
+      "attempt_ids": [
+        "faac41406d7af0f2d8f7e758c5041fc94293f6ac010099713318bf66d33ab197",
+        "a199d785890acd7b697ae0c6150c9fe240497c19ec88611a269eed6221d1cafd",
+        "8b43d2e3c27cfdcef7bdf9e3042154913ed115a867d420e30d0ff2ef1fddee26"
+      ],
+      "error": "grok-4.5: Provider transport failure: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_constraint_auditor",
+      "status": "failed"
+    }
+  ],
+  "degraded": true,
+  "failed_count": 3,
+  "live_count": 0,
+  "results": [
+    {
+      "anonymous_label": "",
+      "attempt_ids": [
+        "8e559fab3927d1c64e35ca6e5f60e3ff5edf2d90a3426236b4298ad6a7442235",
+        "ef17292862574e9252ae7ad49539fc61d0151223572d1086d8b69ae6128b4acd",
+        "e337824606b0377b179c8cfaf86039bb316de6050529b569b940a723e6e3aafc"
+      ],
+      "error": "grok-4.5: Provider transport failure: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_researcher",
+      "status": "failed"
+    },
+    {
+      "anonymous_label": "",
+      "attempt_ids": [
+        "7dfeddd26d906675607a0a9ca3c10604127d2a6d19e2771cdb452ad5a293c922",
+        "a508bb43b13c71bddba58186fd74fc572e2fd1b2f607d8f8988ec7164584c721",
+        "e2cc9c7a19816aa884443d4fe4c0eabf8fb2c9209a48bca776da10fb6904efb8"
+      ],
+      "error": "grok-4.5: Provider transport failure: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_adversary",
+      "status": "failed"
+    },
+    {
+      "anonymous_label": "",
+      "attempt_ids": [
+        "faac41406d7af0f2d8f7e758c5041fc94293f6ac010099713318bf66d33ab197",
+        "a199d785890acd7b697ae0c6150c9fe240497c19ec88611a269eed6221d1cafd",
+        "8b43d2e3c27cfdcef7bdf9e3042154913ed115a867d420e30d0ff2ef1fddee26"
+      ],
+      "error": "grok-4.5: Provider transport failure: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_constraint_auditor",
+      "status": "failed"
+    }
+  ]
+}

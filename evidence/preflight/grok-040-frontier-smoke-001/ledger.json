@@ -1,0 +1,20 @@
+{
+  "accounting_failure": null,
+  "attempt_entries": [],
+  "attempts": 0,
+  "cached_tokens": 0,
+  "calls": 0,
+  "entries": [],
+  "input_tokens": 0,
+  "known_cost_usd": 0.0,
+  "output_tokens": 0,
+  "provider_cost_usd": {},
+  "reasoning_tokens": 0,
+  "schema_version": 3,
+  "stop_reason": null,
+  "tool_calls": 0,
+  "total_tokens": 0,
+  "unknown_cost_calls": 0,
+  "wall_seconds": 0.0032241250000000013,
+  "warnings": []
+}

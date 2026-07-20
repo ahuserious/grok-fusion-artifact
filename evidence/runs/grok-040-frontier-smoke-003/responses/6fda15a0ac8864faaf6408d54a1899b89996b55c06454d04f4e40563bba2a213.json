@@ -1,0 +1,44 @@
+{
+  "invocation": {
+    "config_sha256": "f19fb803c7fcf1e041d4645f4e14e4a42951f5ee77f5b59fcce4302b0d9f4139",
+    "input_sha256": "524b3e10fc09c84cdb5a77b54a37080f865b20075894726835aafafcf395ba08",
+    "prompt_sha256": "98c4835266d1da759981b48fc75b1a3bb3243f80ecb17a75aad22cdae2f534ff",
+    "response_schema_sha256": "480d34e0c8344e5543d494cefdbae3493162a6528c6d556f4754de8362241b97",
+    "run_id": "grok-040-frontier-smoke-003",
+    "schema_name": "adversarial_verdict",
+    "schema_version": 1,
+    "seat_name": "grok45_verifier",
+    "stage": "gate",
+    "system_sha256": "563e5f2f4c5718c96b780ab0e457a40f57c7f04b8a1c75877ccce9cc4650a6e6"
+  },
+  "receipt": {
+    "attempt_id": "2155a97220039fceb8caeb8959fc63bc20cb38b8b493a5a9ad2f3caecf22bf9e",
+    "entry_id": "6fda15a0ac8864faaf6408d54a1899b89996b55c06454d04f4e40563bba2a213",
+    "invocation_sha256": "0f15a895cbdb777b4c41cced6c9b6c9e07a65167395df05aa3c1c5483d8adda0",
+    "response_sha256": "6dd400b7d2b818b26dd4f80694b636703538fc8a6aff13e0483f7ae7e2cf2701",
+    "schema_version": 1
+  },
+  "response": {
+    "actual_model": "grok-4.5",
+    "latency_seconds": 23.657842208000005,
+    "provider": "xai_direct",
+    "raw_status": "completed",
+    "request_id": "a6a09912-89c6-98a3-9a89-51626c959c7d",
+    "requested_model": "grok-4.5",
+    "route": {},
+    "text": "{\n  \"verdict\": \"PASS\",\n  \"artifact_sha256\": \"c6dd3c8ae4da342592dab0814a9f1020288fa0e2a3dd17806532c286306d627a\",\n  \"summary\": \"Plan-only artifact adequately specifies a hermetic, deterministic config-loader release check covering strict JSON, closed-schema unknown-field rejection, exact frontier model IDs, plaintext-secret rejection, env key-name preservation, and unambiguous pass/fail emission, without claiming workspace access or completed execution.\",\n  \"criteria_reviewed\": [\n    \"Plan-only mode: no workspace access or execution claims required or made as completed work\",\n    \"Deterministic pure-function / CLI contract with stable outputs and exit codes\",\n    \"Accept valid strict JSON (object root, RFC-style constraints)\",\n    \"Exact frontier model ID enforcement (required grok-4.5; optional openai/gpt-5.6-sol only with disabled posture)\",\n    \"Unknown-field rejection via frozen closed schema / additionalProperties false at all depths\",\n    \"Plaintext-secret rejection (unconditional denylist; env refs allowed)\",\n    \"Environment-variable key-name preservation (verbatim, no expansion)\",\n    \"Unambiguous machine-primary pass/fail result shape and release rule\",\n    \"Failure handling, flake/determinism controls, and amendment-on-drift posture\",\n    \"Verification design: golden PASS/FAIL vectors, mutation, determinism, independence (explicitly pending)\",\n    \"Explicit external inputs called out (schema, env syntax, disabled marker, secret ruleset) without inventing full field lists\",\n    \"Safety: no network, no env expansion, no config execution; adversarial values only validated\",\n    \"Alignment with supplied mechanical evidence as non-sufficient background only\",\n    \"Conciseness vs completeness tradeoff for a smoke release-check plan\"\n  ],\n  \"blind_spots\": [],\n  \"blocking_findings\": [],\n  \"non_blocking_findings\": [\n    \"Artifact is thorough rather than minimal; still within an acceptable 'concise plan' bound given explicit assumptions, edge cases, and pending verification checklist.\",\n    \"Optional tighter GPT reject-if-present profile and fingerprint/hermetic-walker hardenings are correctly marked optional and do not alter the default PASS set.\"\n  ],\n  \"evidence\": [\n    \"Original goal explicitly defines plan-only smoke problem and forbids workspace/execution claims.\",\n    \"Candidate states pure specification, no workspace access, loader execution, network I/O, or env expansion; all runtime verification items labeled pending.\",\n    \"Ordered checks 1–6 map directly to accept JSON, exact model IDs, unknown fields, plaintext secrets, env key preservation, and unambiguous PASS/FAIL.\",\n    \"Result contract ties status/errors/exit code with sorted stable rule IDs; ship only on PASS.\",\n    \"Assumptions section refuses to invent full schema/env-syntax/disabled-marker/secret-denylist and requires frozen external artifacts.\",\n    \"Mechanical evidence (MCP doctor OK/13 tools, 166 tests passed, validation_errors=[]) is cited only as baseline background and explicitly non-sufficient for secret/unknown-field proof.\",\n    \"Edge cases, failure handling, implementer checklist, and pre-execution verification plan provide actionability without asserting completed runs.\"\n  ],\n  \"required_actions\": []\n}",
+    "usage": {
+      "accounting_error": null,
+      "cached_tokens": 128,
+      "cost_usd": 0.0187644,
+      "input_output_usage_complete": true,
+      "input_tokens": 5195,
+      "output_tokens": 1432,
+      "raw_usage_invalid": false,
+      "reasoning_tokens": 693,
+      "tool_calls": 0,
+      "unknown_cost_fail_closed": false
+    }
+  },
+  "schema_version": 1
+}

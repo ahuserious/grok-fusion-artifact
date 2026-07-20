@@ -1,0 +1,1 @@
+Do not call tools. Review the supplied artifact as an adversarial release gate. Return only the profile's required structured verdict and use pass only if the artifact is internally consistent.

@@ -1,0 +1,82 @@
+{
+  "artifact": "grok-fusion-artifact",
+  "campaign_date": "2026-07-20",
+  "claim_scope": "limited_engineering_validation",
+  "combined_selected_known_cost_usd": 0.4396584,
+  "license": "none-selected",
+  "limited_due_to_api_cost": true,
+  "openrouter_live_tested": false,
+  "schema_version": 1,
+  "source": {
+    "grok_build_version": "0.2.106",
+    "installed_tree_sha256": "b79e1624b60cad40a1f0995b15a7ee314aa353c3cf731187ee38843368cb9ffa",
+    "merged_commit": "1a5321b49ce1695701cf64bbb9c3429b2c6c917a",
+    "repository": "https://github.com/ahuserious/relentless-inception-grok",
+    "tested_commit": "4c9c64712cf4d34cc7a221d04ce857260ac3dccb",
+    "tested_tree_sha256": "b79e1624b60cad40a1f0995b15a7ee314aa353c3cf731187ee38843368cb9ffa",
+    "version": "0.4.1"
+  },
+  "runs": [
+    {
+      "actual_models": [
+        "grok-4.5"
+      ],
+      "calls": 7,
+      "current_release_binding": "0.4.0_release_candidate_external_path_unchanged_in_0.4.1",
+      "gate": {
+        "artifact_sha256": "c6dd3c8ae4da342592dab0814a9f1020288fa0e2a3dd17806532c286306d627a",
+        "pass": 2,
+        "status": "passed",
+        "total": 2
+      },
+      "id": "grok-040-frontier-smoke-003",
+      "kind": "direct_xai_fusion",
+      "known_cost_usd": 0.1822328,
+      "requested_models": [
+        "grok-4.5"
+      ],
+      "status": "completed",
+      "tokens": {
+        "cached": 896,
+        "input": 34254,
+        "output": 19208,
+        "reasoning": 6196,
+        "total": 53462
+      },
+      "unknown_cost_calls": 0
+    },
+    {
+      "attempts": 2,
+      "current_release_binding": "0.4.1_installed_native_profile",
+      "id": "native-grok-build-adversarial-review",
+      "kind": "native_grok_build",
+      "known_cost_usd": 0.2574256,
+      "status": "pass_after_visible_cancelled_attempt"
+    },
+    {
+      "calls": 0,
+      "id": "grok-040-frontier-smoke-001",
+      "kind": "preflight",
+      "known_cost_usd": 0.0,
+      "status": "missing_credential"
+    },
+    {
+      "attempts": 9,
+      "completed_calls": 0,
+      "id": "grok-040-frontier-smoke-002",
+      "kind": "preflight",
+      "known_cost_usd": 0.0,
+      "status": "transport_dns_failure"
+    },
+    {
+      "id": "terminal-bench",
+      "kind": "host_harness",
+      "status": "not_run_with_grok_build_host"
+    },
+    {
+      "id": "deep-swe",
+      "kind": "host_harness",
+      "status": "not_run_with_grok_build_host"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "artifacts": {
+    "blind_spots": [
+      "No seat possesses the real loader contract/example configs; allow-lists and required keys remain inferred—plan must mark schema as an externally supplied frozen artifact.",
+      "Mechanical evidence (MCP OK, 13 tools, 166 tests, empty validation_errors) does not prove secret/unknown-field paths are exercised; risk of correlated over-trust in baseline health.",
+      "Hard-coding today’s model IDs without an explicit amendment process if providers change (A notes version skew; still under-developed as an ops control).",
+      "Credential-routable language (C) can blur pure plan-only validation if misread as runtime credential checks—must stay config-static flags only.",
+      "Secret pattern completeness: all admit false negatives/positives; none define entropy thresholds or update ownership.",
+      "Nested arrays-of-models, non-string secret carriers, and loader acceptance of non-JSON formats are largely untested assumptions.",
+      "DoS/resource bounds for large/deep JSON mentioned lightly; not a first-class deterministic gate requirement in all plans."
+    ],
+    "budget_remaining": {
+      "calls": {
+        "consumed": 7,
+        "limit": 40,
+        "remaining": 33
+      },
+      "input_tokens": {
+        "consumed": 34254,
+        "limit": 1200000,
+        "remaining": 1165746
+      },
+      "known_cost_usd": {
+        "consumed": 0.18223279999999997,
+        "limit": 100.0,
+        "remaining": 99.8177672
+      },
+      "output_tokens": {
+        "consumed": 19208,
+        "limit": 400000,
+        "remaining": 380792
+      },
+      "provider_cost_usd": {
+        "openrouter": {
+          "consumed": 0.0,
+          "limit": 50.0,
+          "remaining": 50.0
+        },
+        "openrouter_native_fusion": {
+          "consumed": 0.0,
+          "limit": 50.0,
+          "remaining": 50.0
+        },
+        "trusted_router": {
+          "consumed": 0.0,
+          "limit": 50.0,
+          "remaining": 50.0
+        },
+        "xai_direct": {
+          "consumed": 0.18223279999999997,
+          "limit": 75.0,
+          "remaining": 74.8177672
+        }
+      },
+      "reasoning_tokens": {
+        "consumed": 6196,
+        "limit": 400000,
+        "remaining": 393804
+      },
+      "tool_calls": {
+        "consumed": 0,
+        "limit": 64,
+        "remaining": 64
+      },
+      "total_tokens": {
+        "consumed": 53462,
+        "limit": 2000000,
+        "remaining": 1946538
+      },
+      "unknown_cost_calls": 0,
+      "wall_seconds": {
+        "consumed": 258.842270625,
+        "limit": 7200,
+        "remaining": 6941.157729375
+      },
+      "warnings": []
+    },
+    "constraints": {
+      "max_fix_cycles": 2,
+      "preserve_unrelated_changes": true,
+      "remote_models_may_write_workspace": false,
+      "require_user_approval_for_destructive_actions": true,
+      "require_user_approval_for_external_writes": true,
+      "sandbox_mode": "workspace_write",
+      "stop_on_test_failure": false,
+      "workspace_scope": "user_requested_only"
+    },
+    "fused_plan": "# Release-Check Plan: Configuration Loader (Plan-Only)\n\n## Purpose and constraints\n\nThis is a **pure specification** for a deterministic release/smoke gate on configuration input for a configuration loader. It defines a single pure function (or equivalent CLI) that accepts config bytes and emits an unambiguous pass/fail. It does **not** perform workspace access, loader execution, network I/O, environment expansion, or live credential checks.\n\n**Release rule:** Ship only on `PASS`. Any `FAIL` blocks release.\n\n**Static background (not runtime proof):** Context pins active direct provider seats to exact `grok-4.5` and names optional GPT seat `openai/gpt-5.6-sol` as disabled for lack of usable routed credential. Mechanical evidence reports MCP doctor handshake OK (13 tools), offline suite 166 tests passed, and default config `validation_errors=[]`. Those facts justify baseline health and allow-list pinning only; they do not replace the checks below and must not be treated as proof that secret/unknown-field paths were exercised.\n\n---\n\n## Pure function contract\n\n```text\nconfig_loader_release_check(config_bytes: UTF-8 bytes) -> ReleaseCheckResult\n```\n\n- **Determinism:** Identical input bytes ⇒ identical result bytes and exit code. No clock, RNG, network, filesystem (beyond supplied bytes), or `process.env` reads that affect the verdict.\n- **Side effects:** None. No expansion of env refs. No mutation of host state.\n- **Exit codes:** `0` = PASS, non-zero = FAIL.\n\n### Result shape (machine-primary)\n\n```json\n{\n  \"status\": \"pass\" | \"fail\",\n  \"summary\": \"PASS\" | \"FAIL <sorted_rule_ids>\",\n  \"errors\": [\"rule_id: detail\", \"...\"],\n  \"preserved_env_keys\": [\"EXACT_NAME\", \"...\"],\n  \"models_accepted\": [\"grok-4.5\", \"...\"],\n  \"config_fingerprint\": \"<optional sha256 of canonical JSON>\"\n}\n```\n\n- `errors` is empty iff `status == \"pass\"`.\n- Rule IDs in `summary` and `errors` are **stable and sorted** for diffability.\n- Human one-line summary is allowed; consumers must key off `status` + exit code, not log prose.\n\n---\n\n## Ordered checks (all must succeed for PASS)\n\n### 1. Strict JSON acceptance\n\n- Input must be a single UTF-8 JSON document parseable under strict JSON (RFC 8259 profile): objects/arrays/strings/numbers/bool/null only; no comments, trailing commas, `NaN`/`Infinity`, or non-UTF-8.\n- Root must be a JSON object.\n- Prefer FAIL on duplicate keys if the parser can detect them; otherwise document parser last-wins behavior as a residual risk.\n- Optional hardening: reject oversized or over-deep documents via fixed size/depth caps (DoS bound). Cap values are frozen implementation constants.\n- **On failure:** `FAIL parse` (exit non-zero). Stop or continue collecting errors per implementation mode; verdict remains fail.\n\n### 2. Frozen closed schema (unknown-field rejection)\n\n- Validate against a **frozen external artifact**: JSON Schema (draft 2020-12 or equivalent) or an equally strict structural walker, derived from the loader contract / default-config shape that already yields empty validation errors in baseline evidence.\n- `additionalProperties: false` (or equivalent) at **every** object depth.\n- Required keys, types, and nesting come only from that frozen artifact—**this plan does not invent the full field list**.\n- Any extra property at any depth → fail (`unknown_field:<path>`).\n- **Assumption (explicit):** Full allow-list is supplied by implementers from the real loader contract before the gate is wired. Until then, the schema slot is a required external input to the check, not an inferred guess.\n\n### 3. Exact frontier model ID enforcement\n\nClosed set pinned to supplied evidence (amendment required if providers change):\n\n| Seat class | Allowed ID (exact string equality) | Policy |\n|---|---|---|\n| Active direct provider seats | `grok-4.5` | **Required.** Missing, wrong type, or any other string → fail. |\n| Optional GPT seat | `openai/gpt-5.6-sol` | **Permitted only** when schema-enforced **disabled / absent-credential** marker is present (or seat omitted). Any enablement posture without that marker → fail. Any other GPT/model ID → fail. |\n\n- Match is exact: no aliases, prefixes, suffixes, case folding, Unicode confusables, or trimming.\n- Walk all model/seat/provider ID fields defined by the frozen schema.\n- **On failure:** `model_id:<path>=<value>` (or `model_id:missing_active`).\n\n**Optional tighter gate (supported minority hardening, off by default):** Reject any presence of `openai/gpt-5.6-sol` in release configs until usable routed credential exists. Context states the seat is disabled for that reason; enabling the tighter gate removes a latent enablement path. Default plan follows evidence (allow ID + disabled marker); document the tighter gate as a named profile if adopted.\n\n**Amendment control:** Model ID set is version-pinned. Changing IDs requires an explicit plan/schema amendment—not silent drift.\n\n### 4. Plaintext-secret rejection (unconditional for this gate)\n\n- Traverse all string values (and keys if the loader can treat keys as secret carriers).\n- **Reject** plaintext secrets via a **documented, version-pinned** denylist artifact (field-name indicators + value patterns). Example pattern classes to pin in that artifact (illustrative, not claimed complete):\n  - Secret-ish field names (`api_key`, `token`, `password`, `secret`, `credential`, etc.) whose value is non-empty and **not** an env reference.\n  - Common prefixes / shapes: `sk-…`, `xai-…`, `Bearer …`, `ghp_`, `glpat-`, PEM blocks, long base64/hex runs attached to secret-like keys.\n- **Allow:** env-var references (see step 5), empty/null only if schema permits, and non-secret configuration strings.\n- Env references are **not** secrets.\n- Rejection is **unconditional** for the release-check (no “dev profile allows plaintext” escape in this gate).\n- **On failure:** `plaintext_secret:<path>`.\n- **Uncertainty:** Pattern sets have false negatives/positives; ownership and updates live with the external ruleset, not ad-hoc edits inside the loader.\n\n### 5. Environment-variable key-name preservation\n\n- Any value that is an environment reference must retain the **exact original key name** characters (case-sensitive): no rewriting, lower-casing, prefix/suffix injection, normalization, or expansion.\n- Loader-native syntax is an **external frozen constant** (unknown here): e.g. `${NAME}`, `env:NAME`, bare `NAME` in an `*_env` field, or structured `{ \"type\": \"env\", \"name\": \"NAME\" }`. Whatever the syntax, the embedded name must round-trip with string equality.\n- Record preserved names in `preserved_env_keys` for audit.\n- Transformation of the key name → `env_key_preservation:<path>`.\n- **Assumption:** “Preserve” means the reference string / name as it appears in input is unchanged in accepted structure and in check transcripts; values are not expanded during the check.\n\n### 6. Unambiguous result emission\n\n- Emit exactly the structured result above.\n- `status: \"pass\"` and `summary: \"PASS\"` only if checks 1–5 all succeed (and optional fingerprint is consistent).\n- Otherwise `status: \"fail\"`, non-zero exit, and stable sorted error list.\n- No warnings-as-pass, no partial credit, no exit-code ambiguity.\n- Optional: `config_fingerprint` = SHA-256 of canonical JSON (sorted keys, minimal separators) to make reproducibility auditable.\n\n---\n\n## Pass / fail criteria (summary)\n\n| Outcome | Conditions |\n|---|---|\n| **PASS** | Strict JSON object; closed schema satisfied; active seats exactly `grok-4.5`; optional GPT absent or exactly `openai/gpt-5.6-sol` with disabled/absent-credential marker; zero plaintext secrets; env key names verbatim; deterministic result emitted. |\n| **FAIL** | Any parse error, unknown field, ID mismatch/missing active seat, plaintext secret, env name rewrite, type/schema violation, or (if enabled) tighter GPT reject-if-present rule. |\n\nDo **not** treat historical `validation_errors=[]` as a sufficient pass signal by itself; it is complementary background only.\n\n---\n\n## Explicit assumptions and remaining uncertainty\n\n1. **Full field allow-list / JSON Schema** is not supplied in-task; it must be a frozen external artifact from the real loader contract. Plans that invent concrete keys beyond model-ID policy over-claim.\n2. **Env-reference syntax** is loader-native and unspecified here; preservation is syntax-agnostic string equality on the name/reference.\n3. **Disabled-marker spelling** for the optional GPT seat is unspecified; schema must define one canonical form (flag, null credential, absence, etc.).\n4. **Secret denylist** completeness is inherently partial; pin and version it externally.\n5. Nested arrays-of-models, non-string secret carriers, and non-JSON loader inputs (if any) are outside demonstrated evidence—schema must state whether they exist; if yes, extend checks accordingly.\n6. Plugin/host versions (Grok Build plugin v0.4.0 on Grok Build 0.2.106) are environmental facts, not validated inside this loader check unless the frozen schema surfaces them.\n7. Current workspace/implementation state is **unknown**; this document is pre-execution only. All execution-dependent outcomes below are **pending**.\n\n---\n\n## Realistic edge cases (must FAIL unless noted)\n\n- `{}` / null root / missing active seat → FAIL (`model_id:missing_active` or schema).\n- `grok-4`, `grok-4.5-preview`, `Grok-4.5`, Unicode dash/look-alike, trailing whitespace in ID → FAIL.\n- Unknown nested field even if value is a valid env ref → FAIL (`unknown_field`).\n- `\"api_key\": \"sk-live-…\"` → FAIL (`plaintext_secret`); `\"api_key\": \"${GROK_API_KEY}\"` → PASS on secret rule if schema allows the field and name is preserved.\n- Env name altered (`API_KEY` → `apiKey`) → FAIL preservation.\n- Optional GPT ID present and enabled while credential posture is disabled/absent → FAIL.\n- Duplicate keys, BOM-only acceptance policy, trailing commas, deep/huge JSON → FAIL per parse/schema/caps.\n- Disabled seat still carrying a wrong model ID → FAIL.\n- Config that passes schema but activates a non-allow-listed model via indirection → FAIL model/invariant walk.\n\n---\n\n## Failure handling\n\n- **CI / release pipeline:** Gate merge/release on exit code 0 and `status == \"pass\"` only.\n- **Diagnostics:** Emit full sorted `errors` list (multi-error preferred for fix-forward speed). Fail-fast short-circuit is allowed as an implementation mode but must not change the PASS set.\n- **Flake control:** Re-run on same bytes must bit-match `summary`, `errors`, `preserved_env_keys`, and fingerprint.\n- **ID / schema drift:** If upstream model IDs change, fail closed and require explicit artifact amendment—do not auto-expand the allow-list.\n- **Secret false positive:** Fix via versioned denylist update + golden vector, not by weakening the release gate.\n- **Adversarial config values:** Check only validates; it never executes config content (mitigates injection-via-value).\n\n---\n\n## Verification plan (plan-level only; execution pending)\n\nAll items below are **pre-execution**. Do not treat them as done until an implementer runs them in a real environment.\n\n1. **Freeze artifacts (pending):**  \n   - Closed JSON Schema / walker with `additionalProperties: false`.  \n   - Model ID constants: required `grok-4.5`; optional `openai/gpt-5.6-sol` + disabled marker enum.  \n   - Secret denylist document (versioned).  \n   - Env-reference syntax predicate.  \n   - Result schema as specified above.\n\n2. **Golden vectors (hand-written fixtures; run pending):**  \n   - **PASS:** minimal valid object, active `grok-4.5`, env refs only, no extras; optional disabled GPT seat omitted or correctly marked. Expect `status=pass`, `errors=[]`, preserved names identical, exit 0.  \n   - **FAIL:** invalid JSON; unknown field; wrong/missing model ID; plaintext `sk-`/`xai-` (or field-name + literal); env name rewrite; enabled GPT without disabled marker; type errors. Expect `status=fail`, specific rule IDs, exit non-zero.\n\n3. **Determinism (pending):** Run checker twice per vector; require bit-identical JSON result and identical exit codes. Optional locale/parser matrix.\n\n4. **Preservation assertion (pending):** For every env-style value, round-trip string equality on the embedded key name; populate `preserved_env_keys`.\n\n5. **Negative injection (pending):** Mutate a PASS fixture (add field, change ID, inject secret, flip GPT enabled) and confirm hard FAIL.\n\n6. **Independence (pending):** Second implementation or reviewer diffs verdicts on the same fixture set.\n\n7. **Background alignment (pending, non-sufficient):** A default config that historically had `validation_errors=[]` should be expected to PASS **only if** it also satisfies exact-ID, closed-schema, secret, and preservation rules of this gate—not because of the historical signal alone.\n\n8. **Meta-audit:** Confirm implementation and this plan never claim plan-time file reads, live MCP calls, or loader execution beyond pure validation of supplied bytes.\n\n---\n\n## Implementer checklist\n\n- [ ] Strict JSON parse, object root, documented duplicate-key policy  \n- [ ] Frozen closed schema, `additionalProperties: false` all depths  \n- [ ] Exact IDs: `grok-4.5` required active; `openai/gpt-5.6-sol` only optional+disabled (tighter reject-if-present optional)  \n- [ ] Pinned plaintext-secret denylist; unconditional reject on release gate  \n- [ ] Env-ref key names preserved verbatim; listed in result  \n- [ ] Structured `{status, summary, errors, preserved_env_keys, models_accepted}`; exit 0 iff pass  \n- [ ] Golden PASS/FAIL vectors + determinism + mutation tests (execution pending)  \n- [ ] Explicit amendment path when model IDs or schema change  \n- [ ] No network, no env expansion, no workspace claims in the check  \n\n---\n\n## Minority hardenings retained (optional, documented)\n\n1. **Stricter GPT posture:** Fail if `openai/gpt-5.6-sol` is present at all until credential existence is an out-of-band release fact—reduces latent enablement (supported by context’s disabled/no-credential statement).  \n2. **Canonical fingerprint:** SHA-256 of canonical JSON on every result for audit trails.  \n3. **Hermetic walker:** Zero-dependency structural walk instead of JSON Schema if schema tooling is unavailable; semantics must still match closed-schema + exact IDs.  \n4. **Externally versioned secret rules / signed allow-list:** Supply-chain hardening beyond minimum task wording.  \n5. **Distrust sole reliance on `validation_errors=[]`:** Correct adversarial stance—keep as complementary signal only.\n\n---\n\n**Bottom line:** Implement `config_loader_release_check` as a hermetic, deterministic predicate: strict JSON → closed schema → exact `grok-4.5` (and disabled-only optional `openai/gpt-5.6-sol`) → plaintext secret reject → verbatim env key preservation → structured PASS/FAIL. Release only on PASS. Full schema, env syntax, disabled-marker spelling, and secret ruleset are required frozen inputs from the loader contract; they are not invented here. All runtime verification remains pending until executed in a real environment.",
+    "minority_findings": [
+      "Stricter GPT posture: reject openai/gpt-5.6-sol outright in any release config until usable routed credential exists (A minority; echoed in B/C variants)—supported by context’s disabled/no-credential statement and reduces latent enablement; preserve as optional hardening.",
+      "B: Allow plaintext only under explicit non-release/dev profile flag—conflicts with task’s unconditional plaintext rejection for this release-check; keep rejection unconditional for the gate.",
+      "B: Zero-dependency hand-rolled structural walker for hermeticity instead of JSON Schema—valid if schema tooling is unavailable; primary clarity still favors frozen schema.",
+      "C: Cryptographically sign allow-list/schema; treat secret scanning as externally versioned ruleset—useful supply-chain hardening, not required by task wording.",
+      "C: Do not trust pre-existing validation_errors=[] alone as proof—correct adversarial stance; use as complementary signal only."
+    ],
+    "required_checks": {
+      "completion_requires": [
+        "requested_change",
+        "verification_evidence",
+        "post_execution_pass"
+      ],
+      "lifecycle_gates": {
+        "final": {
+          "owner": "grok_build_host",
+          "required_evidence": [
+            "gate_verdict",
+            "cost_ledger",
+            "provenance"
+          ],
+          "timeout_seconds": 900,
+          "tool_policy": "none"
+        },
+        "plan": {
+          "owner": "grok_build_host",
+          "required_evidence": [
+            "requirements_trace",
+            "risk_analysis"
+          ],
+          "timeout_seconds": 900,
+          "tool_policy": "none"
+        },
+        "post_execution": {
+          "owner": "grok_build_host",
+          "required_evidence": [
+            "diff",
+            "tests",
+            "requirement_coverage"
+          ],
+          "timeout_seconds": 1200,
+          "tool_policy": "none"
+        },
+        "pre_execution": {
+          "owner": "grok_build_host",
+          "required_evidence": [
+            "approved_fused_plan",
+            "scope_boundaries"
+          ],
+          "timeout_seconds": 900,
+          "tool_policy": "none"
+        },
+        "summarize": {
+          "owner": "grok_build_host",
+          "required_evidence": [
+            "decisions",
+            "open_risks",
+            "verification_state"
+          ],
+          "timeout_seconds": 600,
+          "tool_policy": "none"
+        }
+      },
+      "require_diff_review": true,
+      "run_tests": true
+    }
+  },
+  "backend": "active_grok",
+  "blocking_reasons": [],
+  "execution_contract": {
+    "allow_recursive_grok_cli": false,
+    "completion_requires": [
+      "requested_change",
+      "verification_evidence",
+      "post_execution_pass"
+    ],
+    "enabled": true,
+    "grok_binary": "grok",
+    "handoff_include": [
+      "fused_plan",
+      "constraints",
+      "minority_findings",
+      "blind_spots",
+      "required_checks",
+      "budget_remaining"
+    ],
+    "max_fix_cycles": 2,
+    "mode": "grok_handoff",
+    "model": "grok-4.5-latest",
+    "native_grok": {
+      "enabled": true,
+      "executor_model": "grok-4.5-latest",
+      "executor_reasoning_effort": "max",
+      "inherit_workspace_context": true,
+      "max_parallel_agents": 3,
+      "mode": "host_handoff",
+      "reasoning_only_roles": [],
+      "require_fusion_before_execution": true,
+      "require_gate_after_execution": true,
+      "reviewer_models": [
+        "grok-4.5-latest"
+      ],
+      "reviewer_reasoning_effort": "max",
+      "reviewer_roles": []
+    },
+    "preserve_unrelated_changes": true,
+    "reasoning_effort": "max",
+    "remote_models_may_write_workspace": false,
+    "require_diff_review": true,
+    "require_fused_plan": true,
+    "require_post_execution_gate": true,
+    "require_pre_execution_gate": true,
+    "require_user_approval_for_destructive_actions": true,
+    "require_user_approval_for_external_writes": true,
+    "run_tests": true,
+    "sandbox_mode": "workspace_write",
+    "stop_on_test_failure": false,
+    "timeout_seconds": 3600,
+    "workspace_scope": "user_requested_only"
+  },
+  "execution_contract_sha256": "80ada535b14fa06be5e2b73723bdd9d2a1c74c5a6b75c534bb1b28f860cec580",
+  "handoff_contract_sha256": "b2110cf146e8d3c92e3e08b0f661e3e98a039ebe998c9093189c67e53c2e67e3",
+  "handoff_payload_sha256": "66f957347c83aaa47bad5fbb9e718120b74025ce046351a9be4b522b09823a3f",
+  "included_sections": [
+    "fused_plan",
+    "constraints",
+    "minority_findings",
+    "blind_spots",
+    "required_checks",
+    "budget_remaining"
+  ],
+  "instruction": "This is a persisted Grok Build host-workflow packet, not independent permission to act. Re-inspect the current workspace, preserve user changes, honor newer user instructions and the live sandbox/approval policy, and stop if repository reality contradicts the packet. Do not mutate files or external state yet. The active Grok Build host must independently invoke plan, pre_execution lifecycle gate(s) with their required evidence and retain their same-artifact receipts first. After implementation, the active Grok Build host must invoke the configured post_execution, final, summarize gate(s) over the exact resulting artifact and evidence.\n\nSelected handoff artifacts:\n{\n  \"blind_spots\": [\n    \"No seat possesses the real loader contract/example configs; allow-lists and required keys remain inferred—plan must mark schema as an externally supplied frozen artifact.\",\n    \"Mechanical evidence (MCP OK, 13 tools, 166 tests, empty validation_errors) does not prove secret/unknown-field paths are exercised; risk of correlated over-trust in baseline health.\",\n    \"Hard-coding today’s model IDs without an explicit amendment process if providers change (A notes version skew; still under-developed as an ops control).\",\n    \"Credential-routable language (C) can blur pure plan-only validation if misread as runtime credential checks—must stay config-static flags only.\",\n    \"Secret pattern completeness: all admit false negatives/positives; none define entropy thresholds or update ownership.\",\n    \"Nested arrays-of-models, non-string secret carriers, and loader acceptance of non-JSON formats are largely untested assumptions.\",\n    \"DoS/resource bounds for large/deep JSON mentioned lightly; not a first-class deterministic gate requirement in all plans.\"\n  ],\n  \"budget_remaining\": {\n    \"calls\": {\n      \"consumed\": 7,\n      \"limit\": 40,\n      \"remaining\": 33\n    },\n    \"input_tokens\": {\n      \"consumed\": 34254,\n      \"limit\": 1200000,\n      \"remaining\": 1165746\n    },\n    \"known_cost_usd\": {\n      \"consumed\": 0.18223279999999997,\n      \"limit\": 100.0,\n      \"remaining\": 99.8177672\n    },\n    \"output_tokens\": {\n      \"consumed\": 19208,\n      \"limit\": 400000,\n      \"remaining\": 380792\n    },\n    \"provider_cost_usd\": {\n      \"openrouter\": {\n        \"consumed\": 0.0,\n        \"limit\": 50.0,\n        \"remaining\": 50.0\n      },\n      \"openrouter_native_fusion\": {\n        \"consumed\": 0.0,\n        \"limit\": 50.0,\n        \"remaining\": 50.0\n      },\n      \"trusted_router\": {\n        \"consumed\": 0.0,\n        \"limit\": 50.0,\n        \"remaining\": 50.0\n      },\n      \"xai_direct\": {\n        \"consumed\": 0.18223279999999997,\n        \"limit\": 75.0,\n        \"remaining\": 74.8177672\n      }\n    },\n    \"reasoning_tokens\": {\n      \"consumed\": 6196,\n      \"limit\": 400000,\n      \"remaining\": 393804\n    },\n    \"tool_calls\": {\n      \"consumed\": 0,\n      \"limit\": 64,\n      \"remaining\": 64\n    },\n    \"total_tokens\": {\n      \"consumed\": 53462,\n      \"limit\": 2000000,\n      \"remaining\": 1946538\n    },\n    \"unknown_cost_calls\": 0,\n    \"wall_seconds\": {\n      \"consumed\": 258.842270625,\n      \"limit\": 7200,\n      \"remaining\": 6941.157729375\n    },\n    \"warnings\": []\n  },\n  \"constraints\": {\n    \"max_fix_cycles\": 2,\n    \"preserve_unrelated_changes\": true,\n    \"remote_models_may_write_workspace\": false,\n    \"require_user_approval_for_destructive_actions\": true,\n    \"require_user_approval_for_external_writes\": true,\n    \"sandbox_mode\": \"workspace_write\",\n    \"stop_on_test_failure\": false,\n    \"workspace_scope\": \"user_requested_only\"\n  },\n  \"fused_plan\": \"# Release-Check Plan: Configuration Loader (Plan-Only)\\n\\n## Purpose and constraints\\n\\nThis is a **pure specification** for a deterministic release/smoke gate on configuration input for a configuration loader. It defines a single pure function (or equivalent CLI) that accepts config bytes and emits an unambiguous pass/fail. It does **not** perform workspace access, loader execution, network I/O, environment expansion, or live credential checks.\\n\\n**Release rule:** Ship only on `PASS`. Any `FAIL` blocks release.\\n\\n**Static background (not runtime proof):** Context pins active direct provider seats to exact `grok-4.5` and names optional GPT seat `openai/gpt-5.6-sol` as disabled for lack of usable routed credential. Mechanical evidence reports MCP doctor handshake OK (13 tools), offline suite 166 tests passed, and default config `validation_errors=[]`. Those facts justify baseline health and allow-list pinning only; they do not replace the checks below and must not be treated as proof that secret/unknown-field paths were exercised.\\n\\n---\\n\\n## Pure function contract\\n\\n```text\\nconfig_loader_release_check(config_bytes: UTF-8 bytes) -> ReleaseCheckResult\\n```\\n\\n- **Determinism:** Identical input bytes ⇒ identical result bytes and exit code. No clock, RNG, network, filesystem (beyond supplied bytes), or `process.env` reads that affect the verdict.\\n- **Side effects:** None. No expansion of env refs. No mutation of host state.\\n- **Exit codes:** `0` = PASS, non-zero = FAIL.\\n\\n### Result shape (machine-primary)\\n\\n```json\\n{\\n  \\\"status\\\": \\\"pass\\\" | \\\"fail\\\",\\n  \\\"summary\\\": \\\"PASS\\\" | \\\"FAIL <sorted_rule_ids>\\\",\\n  \\\"errors\\\": [\\\"rule_id: detail\\\", \\\"...\\\"],\\n  \\\"preserved_env_keys\\\": [\\\"EXACT_NAME\\\", \\\"...\\\"],\\n  \\\"models_accepted\\\": [\\\"grok-4.5\\\", \\\"...\\\"],\\n  \\\"config_fingerprint\\\": \\\"<optional sha256 of canonical JSON>\\\"\\n}\\n```\\n\\n- `errors` is empty iff `status == \\\"pass\\\"`.\\n- Rule IDs in `summary` and `errors` are **stable and sorted** for diffability.\\n- Human one-line summary is allowed; consumers must key off `status` + exit code, not log prose.\\n\\n---\\n\\n## Ordered checks (all must succeed for PASS)\\n\\n### 1. Strict JSON acceptance\\n\\n- Input must be a single UTF-8 JSON document parseable under strict JSON (RFC 8259 profile): objects/arrays/strings/numbers/bool/null only; no comments, trailing commas, `NaN`/`Infinity`, or non-UTF-8.\\n- Root must be a JSON object.\\n- Prefer FAIL on duplicate keys if the parser can detect them; otherwise document parser last-wins behavior as a residual risk.\\n- Optional hardening: reject oversized or over-deep documents via fixed size/depth caps (DoS bound). Cap values are frozen implementation constants.\\n- **On failure:** `FAIL parse` (exit non-zero). Stop or continue collecting errors per implementation mode; verdict remains fail.\\n\\n### 2. Frozen closed schema (unknown-field rejection)\\n\\n- Validate against a **frozen external artifact**: JSON Schema (draft 2020-12 or equivalent) or an equally strict structural walker, derived from the loader contract / default-config shape that already yields empty validation errors in baseline evidence.\\n- `additionalProperties: false` (or equivalent) at **every** object depth.\\n- Required keys, types, and nesting come only from that frozen artifact—**this plan does not invent the full field list**.\\n- Any extra property at any depth → fail (`unknown_field:<path>`).\\n- **Assumption (explicit):** Full allow-list is supplied by implementers from the real loader contract before the gate is wired. Until then, the schema slot is a required external input to the check, not an inferred guess.\\n\\n### 3. Exact frontier model ID enforcement\\n\\nClosed set pinned to supplied evidence (amendment required if providers change):\\n\\n| Seat class | Allowed ID (exact string equality) | Policy |\\n|---|---|---|\\n| Active direct provider seats | `grok-4.5` | **Required.** Missing, wrong type, or any other string → fail. |\\n| Optional GPT seat | `openai/gpt-5.6-sol` | **Permitted only** when schema-enforced **disabled / absent-credential** marker is present (or seat omitted). Any enablement posture without that marker → fail. Any other GPT/model ID → fail. |\\n\\n- Match is exact: no aliases, prefixes, suffixes, case folding, Unicode confusables, or trimming.\\n- Walk all model/seat/provider ID fields defined by the frozen schema.\\n- **On failure:** `model_id:<path>=<value>` (or `model_id:missing_active`).\\n\\n**Optional tighter gate (supported minority hardening, off by default):** Reject any presence of `openai/gpt-5.6-sol` in release configs until usable routed credential exists. Context states the seat is disabled for that reason; enabling the tighter gate removes a latent enablement path. Default plan follows evidence (allow ID + disabled marker); document the tighter gate as a named profile if adopted.\\n\\n**Amendment control:** Model ID set is version-pinned. Changing IDs requires an explicit plan/schema amendment—not silent drift.\\n\\n### 4. Plaintext-secret rejection (unconditional for this gate)\\n\\n- Traverse all string values (and keys if the loader can treat keys as secret carriers).\\n- **Reject** plaintext secrets via a **documented, version-pinned** denylist artifact (field-name indicators + value patterns). Example pattern classes to pin in that artifact (illustrative, not claimed complete):\\n  - Secret-ish field names (`api_key`, `token`, `password`, `secret`, `credential`, etc.) whose value is non-empty and **not** an env reference.\\n  - Common prefixes / shapes: `sk-…`, `xai-…`, `Bearer …`, `ghp_`, `glpat-`, PEM blocks, long base64/hex runs attached to secret-like keys.\\n- **Allow:** env-var references (see step 5), empty/null only if schema permits, and non-secret configuration strings.\\n- Env references are **not** secrets.\\n- Rejection is **unconditional** for the release-check (no “dev profile allows plaintext” escape in this gate).\\n- **On failure:** `plaintext_secret:<path>`.\\n- **Uncertainty:** Pattern sets have false negatives/positives; ownership and updates live with the external ruleset, not ad-hoc edits inside the loader.\\n\\n### 5. Environment-variable key-name preservation\\n\\n- Any value that is an environment reference must retain the **exact original key name** characters (case-sensitive): no rewriting, lower-casing, prefix/suffix injection, normalization, or expansion.\\n- Loader-native syntax is an **external frozen constant** (unknown here): e.g. `${NAME}`, `env:NAME`, bare `NAME` in an `*_env` field, or structured `{ \\\"type\\\": \\\"env\\\", \\\"name\\\": \\\"NAME\\\" }`. Whatever the syntax, the embedded name must round-trip with string equality.\\n- Record preserved names in `preserved_env_keys` for audit.\\n- Transformation of the key name → `env_key_preservation:<path>`.\\n- **Assumption:** “Preserve” means the reference string / name as it appears in input is unchanged in accepted structure and in check transcripts; values are not expanded during the check.\\n\\n### 6. Unambiguous result emission\\n\\n- Emit exactly the structured result above.\\n- `status: \\\"pass\\\"` and `summary: \\\"PASS\\\"` only if checks 1–5 all succeed (and optional fingerprint is consistent).\\n- Otherwise `status: \\\"fail\\\"`, non-zero exit, and stable sorted error list.\\n- No warnings-as-pass, no partial credit, no exit-code ambiguity.\\n- Optional: `config_fingerprint` = SHA-256 of canonical JSON (sorted keys, minimal separators) to make reproducibility auditable.\\n\\n---\\n\\n## Pass / fail criteria (summary)\\n\\n| Outcome | Conditions |\\n|---|---|\\n| **PASS** | Strict JSON object; closed schema satisfied; active seats exactly `grok-4.5`; optional GPT absent or exactly `openai/gpt-5.6-sol` with disabled/absent-credential marker; zero plaintext secrets; env key names verbatim; deterministic result emitted. |\\n| **FAIL** | Any parse error, unknown field, ID mismatch/missing active seat, plaintext secret, env name rewrite, type/schema violation, or (if enabled) tighter GPT reject-if-present rule. |\\n\\nDo **not** treat historical `validation_errors=[]` as a sufficient pass signal by itself; it is complementary background only.\\n\\n---\\n\\n## Explicit assumptions and remaining uncertainty\\n\\n1. **Full field allow-list / JSON Schema** is not supplied in-task; it must be a frozen external artifact from the real loader contract. Plans that invent concrete keys beyond model-ID policy over-claim.\\n2. **Env-reference syntax** is loader-native and unspecified here; preservation is syntax-agnostic string equality on the name/reference.\\n3. **Disabled-marker spelling** for the optional GPT seat is unspecified; schema must define one canonical form (flag, null credential, absence, etc.).\\n4. **Secret denylist** completeness is inherently partial; pin and version it externally.\\n5. Nested arrays-of-models, non-string secret carriers, and non-JSON loader inputs (if any) are outside demonstrated evidence—schema must state whether they exist; if yes, extend checks accordingly.\\n6. Plugin/host versions (Grok Build plugin v0.4.0 on Grok Build 0.2.106) are environmental facts, not validated inside this loader check unless the frozen schema surfaces them.\\n7. Current workspace/implementation state is **unknown**; this document is pre-execution only. All execution-dependent outcomes below are **pending**.\\n\\n---\\n\\n## Realistic edge cases (must FAIL unless noted)\\n\\n- `{}` / null root / missing active seat → FAIL (`model_id:missing_active` or schema).\\n- `grok-4`, `grok-4.5-preview`, `Grok-4.5`, Unicode dash/look-alike, trailing whitespace in ID → FAIL.\\n- Unknown nested field even if value is a valid env ref → FAIL (`unknown_field`).\\n- `\\\"api_key\\\": \\\"sk-live-…\\\"` → FAIL (`plaintext_secret`); `\\\"api_key\\\": \\\"${GROK_API_KEY}\\\"` → PASS on secret rule if schema allows the field and name is preserved.\\n- Env name altered (`API_KEY` → `apiKey`) → FAIL preservation.\\n- Optional GPT ID present and enabled while credential posture is disabled/absent → FAIL.\\n- Duplicate keys, BOM-only acceptance policy, trailing commas, deep/huge JSON → FAIL per parse/schema/caps.\\n- Disabled seat still carrying a wrong model ID → FAIL.\\n- Config that passes schema but activates a non-allow-listed model via indirection → FAIL model/invariant walk.\\n\\n---\\n\\n## Failure handling\\n\\n- **CI / release pipeline:** Gate merge/release on exit code 0 and `status == \\\"pass\\\"` only.\\n- **Diagnostics:** Emit full sorted `errors` list (multi-error preferred for fix-forward speed). Fail-fast short-circuit is allowed as an implementation mode but must not change the PASS set.\\n- **Flake control:** Re-run on same bytes must bit-match `summary`, `errors`, `preserved_env_keys`, and fingerprint.\\n- **ID / schema drift:** If upstream model IDs change, fail closed and require explicit artifact amendment—do not auto-expand the allow-list.\\n- **Secret false positive:** Fix via versioned denylist update + golden vector, not by weakening the release gate.\\n- **Adversarial config values:** Check only validates; it never executes config content (mitigates injection-via-value).\\n\\n---\\n\\n## Verification plan (plan-level only; execution pending)\\n\\nAll items below are **pre-execution**. Do not treat them as done until an implementer runs them in a real environment.\\n\\n1. **Freeze artifacts (pending):**  \\n   - Closed JSON Schema / walker with `additionalProperties: false`.  \\n   - Model ID constants: required `grok-4.5`; optional `openai/gpt-5.6-sol` + disabled marker enum.  \\n   - Secret denylist document (versioned).  \\n   - Env-reference syntax predicate.  \\n   - Result schema as specified above.\\n\\n2. **Golden vectors (hand-written fixtures; run pending):**  \\n   - **PASS:** minimal valid object, active `grok-4.5`, env refs only, no extras; optional disabled GPT seat omitted or correctly marked. Expect `status=pass`, `errors=[]`, preserved names identical, exit 0.  \\n   - **FAIL:** invalid JSON; unknown field; wrong/missing model ID; plaintext `sk-`/`xai-` (or field-name + literal); env name rewrite; enabled GPT without disabled marker; type errors. Expect `status=fail`, specific rule IDs, exit non-zero.\\n\\n3. **Determinism (pending):** Run checker twice per vector; require bit-identical JSON result and identical exit codes. Optional locale/parser matrix.\\n\\n4. **Preservation assertion (pending):** For every env-style value, round-trip string equality on the embedded key name; populate `preserved_env_keys`.\\n\\n5. **Negative injection (pending):** Mutate a PASS fixture (add field, change ID, inject secret, flip GPT enabled) and confirm hard FAIL.\\n\\n6. **Independence (pending):** Second implementation or reviewer diffs verdicts on the same fixture set.\\n\\n7. **Background alignment (pending, non-sufficient):** A default config that historically had `validation_errors=[]` should be expected to PASS **only if** it also satisfies exact-ID, closed-schema, secret, and preservation rules of this gate—not because of the historical signal alone.\\n\\n8. **Meta-audit:** Confirm implementation and this plan never claim plan-time file reads, live MCP calls, or loader execution beyond pure validation of supplied bytes.\\n\\n---\\n\\n## Implementer checklist\\n\\n- [ ] Strict JSON parse, object root, documented duplicate-key policy  \\n- [ ] Frozen closed schema, `additionalProperties: false` all depths  \\n- [ ] Exact IDs: `grok-4.5` required active; `openai/gpt-5.6-sol` only optional+disabled (tighter reject-if-present optional)  \\n- [ ] Pinned plaintext-secret denylist; unconditional reject on release gate  \\n- [ ] Env-ref key names preserved verbatim; listed in result  \\n- [ ] Structured `{status, summary, errors, preserved_env_keys, models_accepted}`; exit 0 iff pass  \\n- [ ] Golden PASS/FAIL vectors + determinism + mutation tests (execution pending)  \\n- [ ] Explicit amendment path when model IDs or schema change  \\n- [ ] No network, no env expansion, no workspace claims in the check  \\n\\n---\\n\\n## Minority hardenings retained (optional, documented)\\n\\n1. **Stricter GPT posture:** Fail if `openai/gpt-5.6-sol` is present at all until credential existence is an out-of-band release fact—reduces latent enablement (supported by context’s disabled/no-credential statement).  \\n2. **Canonical fingerprint:** SHA-256 of canonical JSON on every result for audit trails.  \\n3. **Hermetic walker:** Zero-dependency structural walk instead of JSON Schema if schema tooling is unavailable; semantics must still match closed-schema + exact IDs.  \\n4. **Externally versioned secret rules / signed allow-list:** Supply-chain hardening beyond minimum task wording.  \\n5. **Distrust sole reliance on `validation_errors=[]`:** Correct adversarial stance—keep as complementary signal only.\\n\\n---\\n\\n**Bottom line:** Implement `config_loader_release_check` as a hermetic, deterministic predicate: strict JSON → closed schema → exact `grok-4.5` (and disabled-only optional `openai/gpt-5.6-sol`) → plaintext secret reject → verbatim env key preservation → structured PASS/FAIL. Release only on PASS. Full schema, env syntax, disabled-marker spelling, and secret ruleset are required frozen inputs from the loader contract; they are not invented here. All runtime verification remains pending until executed in a real environment.\",\n  \"minority_findings\": [\n    \"Stricter GPT posture: reject openai/gpt-5.6-sol outright in any release config until usable routed credential exists (A minority; echoed in B/C variants)—supported by context’s disabled/no-credential statement and reduces latent enablement; preserve as optional hardening.\",\n    \"B: Allow plaintext only under explicit non-release/dev profile flag—conflicts with task’s unconditional plaintext rejection for this release-check; keep rejection unconditional for the gate.\",\n    \"B: Zero-dependency hand-rolled structural walker for hermeticity instead of JSON Schema—valid if schema tooling is unavailable; primary clarity still favors frozen schema.\",\n    \"C: Cryptographically sign allow-list/schema; treat secret scanning as externally versioned ruleset—useful supply-chain hardening, not required by task wording.\",\n    \"C: Do not trust pre-existing validation_errors=[] alone as proof—correct adversarial stance; use as complementary signal only.\"\n  ],\n  \"required_checks\": {\n    \"completion_requires\": [\n      \"requested_change\",\n      \"verification_evidence\",\n      \"post_execution_pass\"\n    ],\n    \"lifecycle_gates\": {\n      \"final\": {\n        \"owner\": \"grok_build_host\",\n        \"required_evidence\": [\n          \"gate_verdict\",\n          \"cost_ledger\",\n          \"provenance\"\n        ],\n        \"timeout_seconds\": 900,\n        \"tool_policy\": \"none\"\n      },\n      \"plan\": {\n        \"owner\": \"grok_build_host\",\n        \"required_evidence\": [\n          \"requirements_trace\",\n          \"risk_analysis\"\n        ],\n        \"timeout_seconds\": 900,\n        \"tool_policy\": \"none\"\n      },\n      \"post_execution\": {\n        \"owner\": \"grok_build_host\",\n        \"required_evidence\": [\n          \"diff\",\n          \"tests\",\n          \"requirement_coverage\"\n        ],\n        \"timeout_seconds\": 1200,\n        \"tool_policy\": \"none\"\n      },\n      \"pre_execution\": {\n        \"owner\": \"grok_build_host\",\n        \"required_evidence\": [\n          \"approved_fused_plan\",\n          \"scope_boundaries\"\n        ],\n        \"timeout_seconds\": 900,\n        \"tool_policy\": \"none\"\n      },\n      \"summarize\": {\n        \"owner\": \"grok_build_host\",\n        \"required_evidence\": [\n          \"decisions\",\n          \"open_risks\",\n          \"verification_state\"\n        ],\n        \"timeout_seconds\": 600,\n        \"tool_policy\": \"none\"\n      }\n    },\n    \"require_diff_review\": true,\n    \"run_tests\": true\n  }\n}",
+  "lifecycle": {
+    "host_receipts_required": true,
+    "later_gates": [
+      "post_execution",
+      "final",
+      "summarize"
+    ],
+    "pending_gates": [
+      "plan",
+      "pre_execution"
+    ],
+    "stage_owner": "grok_build_host"
+  },
+  "mutation_authorized": false,
+  "ready": false,
+  "ready_for_host_workflow": true,
+  "requires_explicit_confirmation": false,
+  "run_id": "grok-040-frontier-smoke-003",
+  "schema_version": 2,
+  "selected_profile": "maximum_intelligence",
+  "status": "awaiting_host_gates",
+  "synthesis_gate": {
+    "artifact_sha256": "c6dd3c8ae4da342592dab0814a9f1020288fa0e2a3dd17806532c286306d627a",
+    "owner": "mcp_runtime",
+    "passed": true
+  }
+}

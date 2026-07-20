@@ -1,0 +1,5 @@
+{
+  "deep_swe": "not_run_with_grok_build_host",
+  "schema_version": 1,
+  "terminal_bench": "not_run_with_grok_build_host"
+}

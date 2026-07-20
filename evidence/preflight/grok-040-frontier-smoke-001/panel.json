@@ -1,0 +1,69 @@
+{
+  "attempts": [
+    {
+      "anonymous_label": "",
+      "attempt_ids": [],
+      "error": "grok-4.5: Missing API credential environment variable: XAI_API_KEY",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_researcher",
+      "status": "failed"
+    },
+    {
+      "anonymous_label": "",
+      "attempt_ids": [],
+      "error": "grok-4.5: Missing API credential environment variable: XAI_API_KEY",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_constraint_auditor",
+      "status": "failed"
+    },
+    {
+      "anonymous_label": "",
+      "attempt_ids": [],
+      "error": "grok-4.5: Missing API credential environment variable: XAI_API_KEY",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_adversary",
+      "status": "failed"
+    }
+  ],
+  "degraded": true,
+  "failed_count": 3,
+  "live_count": 0,
+  "results": [
+    {
+      "anonymous_label": "",
+      "attempt_ids": [],
+      "error": "grok-4.5: Missing API credential environment variable: XAI_API_KEY",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_researcher",
+      "status": "failed"
+    },
+    {
+      "anonymous_label": "",
+      "attempt_ids": [],
+      "error": "grok-4.5: Missing API credential environment variable: XAI_API_KEY",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_adversary",
+      "status": "failed"
+    },
+    {
+      "anonymous_label": "",
+      "attempt_ids": [],
+      "error": "grok-4.5: Missing API credential environment variable: XAI_API_KEY",
+      "response": null,
+      "response_evidence": null,
+      "role": "panel",
+      "seat_name": "grok45_constraint_auditor",
+      "status": "failed"
+    }
+  ]
+}

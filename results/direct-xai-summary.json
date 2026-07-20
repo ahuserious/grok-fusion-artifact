@@ -1,0 +1,22 @@
+{
+  "calls": 7,
+  "gate": {
+    "artifact_sha256": "c6dd3c8ae4da342592dab0814a9f1020288fa0e2a3dd17806532c286306d627a",
+    "pass": 2,
+    "status": "passed",
+    "total": 2
+  },
+  "known_cost_usd": 0.1822328,
+  "models": {
+    "actual": [
+      "grok-4.5"
+    ],
+    "requested": [
+      "grok-4.5"
+    ]
+  },
+  "run_id": "grok-040-frontier-smoke-003",
+  "schema_version": 1,
+  "status": "completed",
+  "unknown_cost_calls": 0
+}

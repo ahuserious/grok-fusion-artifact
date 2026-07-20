@@ -1,0 +1,42 @@
+{
+  "attempts": [
+    {
+      "actual_model_telemetry": "grok-4.5-build",
+      "cost_usd": 0.1224548,
+      "private_chat_sha256": "0173c38af14ddb951d1360ce040fa12d88ec1963dcfed02ed56e0136b10efc55",
+      "private_updates_sha256": "2d00021f09467eff06df391bd7a267d232923a7f8f0bff9792dd31bbb7bfa13f",
+      "reasoning_effort": "high",
+      "requested_model": "grok-4.5",
+      "stop_reason": "cancelled",
+      "tokens": {
+        "input": 63580,
+        "output": 195,
+        "reasoning": 42
+      },
+      "verdict": null
+    },
+    {
+      "actual_model_telemetry": "grok-4.5-build",
+      "cost_usd": 0.1349708,
+      "private_chat_sha256": "7128aee7483417d25f0463f05716933a42ac5165e9bd49ef5350534523447e60",
+      "private_updates_sha256": "a4414d33315110081f0a2d2ece24cf831aa9bbe788cfb86e8dcead9c61599838",
+      "reasoning_effort": "high",
+      "requested_model": "grok-4.5",
+      "stop_reason": "end_turn",
+      "tokens": {
+        "input": 65322,
+        "output": 975,
+        "reasoning": 879
+      },
+      "verdict": "pass"
+    }
+  ],
+  "host": {
+    "name": "Grok Build",
+    "version": "0.2.106"
+  },
+  "private_source_withheld": true,
+  "schema_version": 1,
+  "selected_known_cost_usd": 0.2574256,
+  "task_class": "installed adversarial-review profile smoke"
+}
