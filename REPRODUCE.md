@@ -15,7 +15,7 @@ These commands use only the Python standard library and make no network or model
 ```bash
 git clone https://github.com/ahuserious/relentless-inception-grok.git
 cd relentless-inception-grok
-git checkout 4c9c64712cf4d34cc7a221d04ce857260ac3dccb
+git checkout 7c7649aa7c0356ce344097e1ce344ae654f1b360
 python3 -m unittest discover -s tests -v
 python3 -m compileall -q runtime tests
 grok plugin validate .

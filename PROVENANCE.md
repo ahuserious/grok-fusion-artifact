@@ -3,16 +3,17 @@
 ## Release source
 
 - Plugin repository: `https://github.com/ahuserious/relentless-inception-grok`
-- Tested feature commit: `4c9c64712cf4d34cc7a221d04ce857260ac3dccb`
-- Merged release commit: `1a5321b49ce1695701cf64bbb9c3429b2c6c917a`
-- Shared tested/merged tree: `1b5c10ef0835d8c6f5eb9db9aa45bac3e8d3e3c3`
+- Current merged release commit: `7c7649aa7c0356ce344097e1ce344ae654f1b360`
+- Current release Git tree: `7912e454a8bee1b1d9a04b69079f3e9c61631f4e`
+- Feature merge commit: `1a5321b49ce1695701cf64bbb9c3429b2c6c917a`
+- Historical native profile candidate: `4c9c64712cf4d34cc7a221d04ce857260ac3dccb` (operator-observed, not session-bound)
 - Plugin version: `0.4.1`
-- Reproducible tested source tree SHA-256: `6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031`
-- Reproducible installed plugin tree SHA-256: `6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031`
+- Reproducible current source tree SHA-256: `6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031`
+- Reproducible current installed plugin tree SHA-256: `6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031`
 - Historical operator-recorded tree value: `b79e1624b60cad40a1f0995b15a7ee314aa353c3cf731187ee38843368cb9ffa` (original serialization unpublished; retained as history, not a reproducible claim)
 - Grok Build: `0.2.106 (bde89716f679)`
 
-The matching reproducible hashes cover 102 relative paths, executable modes, sizes, and per-file SHA-256 values while excluding Git metadata, bytecode, and `.DS_Store`. [`scripts/tree_hash.py`](scripts/tree_hash.py) specifies the algorithm, and [`evidence/source-tree/tree-hash-inputs.json`](evidence/source-tree/tree-hash-inputs.json) publishes every input record.
+The matching reproducible hashes cover 102 selected files from current release commit `7c7649a...`, including relative paths, executable modes, sizes, and per-file SHA-256 values while excluding Git metadata, bytecode, and `.DS_Store`. They do **not** describe the earlier `4c9c647...` tree. [`scripts/tree_hash.py`](scripts/tree_hash.py) specifies the algorithm, and [`evidence/source-tree/tree-hash-inputs.json`](evidence/source-tree/tree-hash-inputs.json) publishes every input record.
 
 ## Direct xAI run
 

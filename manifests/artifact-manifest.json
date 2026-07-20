@@ -28,8 +28,8 @@
     },
     {
       "path": "PROVENANCE.md",
-      "sha256": "9ceb80495875e038dc8cdbc47bd9163b7ff1368b0dd21ef3377015256b451777",
-      "size_bytes": 2926
+      "sha256": "45c7ad6987e81ec7bd15f8e96c0e29d2ecbcdaca6515fd45446d86ecd4ba77a0",
+      "size_bytes": 3185
     },
     {
       "path": "README.md",
@@ -38,13 +38,13 @@
     },
     {
       "path": "REPRODUCE.md",
-      "sha256": "c328e3aad9019d620b4a23c6f86bfb236541de94c2c03a56efbb5f81f607ba78",
+      "sha256": "6042ddbdbd0d3d6ac125f4c0c8a40cdbd8ad64576ddebfbfac13535168880fdb",
       "size_bytes": 1564
     },
     {
       "path": "SECURITY.md",
-      "sha256": "4a5293d9ad1f11c9d500badd0357aee81d3e7d0e16bbcbdd6f279976f5bf197d",
-      "size_bytes": 970
+      "sha256": "dc81428e2697277c0ffcd828a4c74eb430d30129aaac6ed169b005fb4edefdb5",
+      "size_bytes": 1031
     },
     {
       "path": "analysis/report.py",
@@ -73,8 +73,8 @@
     },
     {
       "path": "evidence/campaign-summary.json",
-      "sha256": "7708d36efadde99fd034aa302416cb22b7792ca3f85595466bb9d40544ec599a",
-      "size_bytes": 2681
+      "sha256": "7edc437b015cd0850b729b7737b25c238d429dd5c3a7390e6faef01c4aa05a14",
+      "size_bytes": 2823
     },
     {
       "path": "evidence/native-build/native-smoke-receipt.json",
@@ -183,8 +183,8 @@
     },
     {
       "path": "evidence/source-history/direct-run-binding.json",
-      "sha256": "280ec5d433354d97a1d0c932314c2a79040ed983770f2fb2fc4dada8935d13c4",
-      "size_bytes": 1767
+      "sha256": "70d913aef96abc84133529094561ca516cec0f5114ab33b2c6078b909f0ed55f",
+      "size_bytes": 1800
     },
     {
       "path": "evidence/source-tree/tree-hash-inputs.json",
@@ -193,13 +193,13 @@
     },
     {
       "path": "evidence/source-tree/tree-hash-observation.json",
-      "sha256": "dc6fea531991309a22f14b4b9df5b801ecf00697b06dd352a0c666e866863907",
-      "size_bytes": 977
+      "sha256": "b77ec1d83df85f83fe27c78387e80bc52bf34150d7785953125936bbc43df24b",
+      "size_bytes": 1060
     },
     {
       "path": "jigs/README.md",
-      "sha256": "d6045eb4b2514b1fe177823169e8cf7d8e7b79907757c0c6744a5caab5c743c0",
-      "size_bytes": 936
+      "sha256": "e8f048b36fca1f927df3b6e8f8ad6bd946044d67d7c383377e1749b66b079126",
+      "size_bytes": 1196
     },
     {
       "path": "jigs/live-fusion/config.override.json",
@@ -208,8 +208,8 @@
     },
     {
       "path": "jigs/live-fusion/run.sh",
-      "sha256": "4ea892c690ae60e988c9f944117f039a64a74820e9fac2bdf14e59b0d1a6f4fd",
-      "size_bytes": 2353
+      "sha256": "ce2512bc11d56a358c4952ab57d2915da3149af3108e4cbc6363009ec5c1677d",
+      "size_bytes": 2914
     },
     {
       "path": "jigs/live-fusion/task.txt",
@@ -273,13 +273,13 @@
     },
     {
       "path": "scripts/verify_artifact.py",
-      "sha256": "dda6622c8c3d3cd7f4fbabc042e93875df055f479560a9d5a6bb6c9c2e2a7e33",
-      "size_bytes": 35192
+      "sha256": "80bb47daa4a6d0b93bf218295daa178c6c29ff2168d8b303a489ec239c9d629c",
+      "size_bytes": 44534
     },
     {
       "path": "tests/test_verify_artifact.py",
-      "sha256": "313e310c8871c033beeeb3d8230b382f0e7ce3a10fb66fefebfaafe43dd44f11",
-      "size_bytes": 5147
+      "sha256": "e209b7658aa0bff5f4993479d05177daddb2ba8d712631a002f8b6a2c811c345",
+      "size_bytes": 14493
     }
   ],
   "generated_by": "scripts/verify_artifact.py --refresh",

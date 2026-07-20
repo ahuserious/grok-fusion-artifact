@@ -3,14 +3,22 @@ set -eu
 
 : "${RI_GROK_SOURCE:?Set RI_GROK_SOURCE to the pinned plugin checkout}"
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-compatibility_commit=4c9c64712cf4d34cc7a221d04ce857260ac3dccb
+pinned_commit=7c7649aa7c0356ce344097e1ce344ae654f1b360
+pinned_git_tree=7912e454a8bee1b1d9a04b69079f3e9c61631f4e
 resolved_commit=$(git -C "$RI_GROK_SOURCE" rev-parse HEAD 2>/dev/null || true)
-if ! git -C "$RI_GROK_SOURCE" cat-file -e "$compatibility_commit^{commit}" 2>/dev/null; then
-  echo "RI_GROK_SOURCE does not contain tested compatibility commit $compatibility_commit." >&2
+resolved_git_tree=$(git -C "$RI_GROK_SOURCE" rev-parse 'HEAD^{tree}' 2>/dev/null || true)
+if [ "$resolved_commit" != "$pinned_commit" ] || [ "$resolved_git_tree" != "$pinned_git_tree" ]; then
+  echo "RI_GROK_SOURCE must be checked out at release commit $pinned_commit (tree $pinned_git_tree)." >&2
   exit 1
 fi
-if ! git -C "$RI_GROK_SOURCE" diff --quiet "$compatibility_commit" -- config/default.json schemas runtime; then
-  echo "RI_GROK_SOURCE config/schema/runtime differs from tested compatibility commit $compatibility_commit." >&2
+if ! git -C "$RI_GROK_SOURCE" diff --quiet "$pinned_commit" -- config/default.json schemas runtime; then
+  echo "RI_GROK_SOURCE has tracked changes in config/schema/runtime." >&2
+  exit 1
+fi
+untracked_runtime_files=$(git -C "$RI_GROK_SOURCE" ls-files --others --exclude-standard -- config/default.json schemas runtime)
+ignored_runtime_files=$(git -C "$RI_GROK_SOURCE" ls-files --others --ignored --exclude-standard -- config/default.json schemas runtime)
+if [ -n "$untracked_runtime_files" ] || [ -n "$ignored_runtime_files" ]; then
+  echo "RI_GROK_SOURCE has untracked or ignored files in config/schema/runtime." >&2
   exit 1
 fi
 
@@ -21,7 +29,7 @@ preview() {
     RELENTLESS_INCEPTION_DATA_DIR="${RI_RUN_DATA_DIR:-<required-for-execution>}" \
     python3 -m relentless_inception config validate
   echo "Compatibility run only: the historical task/config bytes were not published."
-  echo "Source compatibility: $resolved_commit matches tested config/schema/runtime at $compatibility_commit."
+  echo "Source pin: release commit $resolved_commit and tree $resolved_git_tree with clean config/schema/runtime roots."
   echo "Billable ceiling: 7 dispatch attempts; observed-cost stop at USD 0.50 overall/xAI."
   echo "Caveat: in-flight calls can cross an observed-cost threshold; USD 0.50 is not a prepaid provider cap."
   echo "Historical selected direct run: USD 0.1822328 for 7 calls."

@@ -13,7 +13,7 @@
     "task_sha256": "78191a29e94f6073d1138a88e70f610012c99ee3faa2ec4c394f27eb936962c9"
   },
   "jig_classification": "compatible_reproduction_not_exact_replay",
-  "known_compatibility_observation": "The external orchestration, provider, persistence, and config-loader implementation files are byte-identical between candidate commit 2963abbe2ccea1a44ee9f3cbd78b8a258ab07daf and tested commit 4c9c64712cf4d34cc7a221d04ce857260ac3dccb; runtime package version metadata and native-host files changed.",
+  "known_compatibility_observation": "The external orchestration, provider, persistence, and config-loader implementation files are byte-identical between candidate commit 2963abbe2ccea1a44ee9f3cbd78b8a258ab07daf and current release commit 7c7649aa7c0356ce344097e1ce344ae654f1b360; runtime package version metadata, native-host files, and release documentation changed.",
   "receipt_bound_source_commit": null,
   "schema_version": 1,
   "why_not_exact": [

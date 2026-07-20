@@ -47,6 +47,7 @@ PRIVATE_PATH_PATTERNS = {
     "macOS home path": re.compile(joined_bytes(b"/", b"Users", rb"/[^/\s]+/")),
     "Linux home path": re.compile(joined_bytes(b"/", b"home", rb"/[^/\s]+/")),
     "macOS temp path": re.compile(joined_bytes(b"/", b"(?:private/)?var/folders", rb"/")),
+    "POSIX temp path": re.compile(joined_bytes(b"/", rb"(?:private/)?", b"tmp", rb"/")),
     "Windows home path": re.compile(joined_bytes(rb"[A-Za-z]:\\", b"Users", rb"\\[^\\\s]+\\"), re.I),
     "file URI": re.compile(joined_bytes(b"file", rb":/{2,3}(?:[^\s)>'\"]+)"), re.I),
 }
@@ -62,6 +63,15 @@ DIRECT_TOKENS = {
     "reasoning": 6196,
     "total": 53462,
 }
+DIRECT_TOPOLOGY = [
+    (0, "panel", "grok45_researcher"),
+    (1, "panel", "grok45_adversary"),
+    (2, "panel", "grok45_constraint_auditor"),
+    (3, "judge", "grok45_judge"),
+    (4, "synthesis", "grok45_synthesizer"),
+    (5, "gate", "grok45_verifier"),
+    (6, "gate", "grok45_constraint_auditor"),
+]
 TREE_SHA256 = "6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031"
 
 
@@ -263,6 +273,13 @@ def verify_direct_evidence(root: Path = ROOT) -> list[str]:
     }
     if set(attempt_by_index) != set(range(7)):
         failures.append("direct attempt indexes are not exactly 0 through 6")
+    actual_attempt_topology = [
+        (item.get("attempt_index"), item.get("stage"), item.get("seat"))
+        for item in attempts
+        if isinstance(item, Mapping)
+    ]
+    if actual_attempt_topology != DIRECT_TOPOLOGY:
+        failures.append("direct attempt topology mismatch")
 
     entry_by_id: dict[str, Mapping[str, Any]] = {}
     expected_response_paths: set[str] = set()
@@ -426,34 +443,168 @@ def verify_direct_evidence(root: Path = ROOT) -> list[str]:
     ):
         failures.append("direct ledger terminal accounting state mismatch")
 
-    def check_semantic_response(label: str, container: Mapping[str, Any]) -> None:
+    actual_entry_topology = [
+        (entry.get("attempt_index"), entry.get("stage"), entry.get("seat"))
+        for entry in entries
+        if isinstance(entry, Mapping)
+    ]
+    if actual_entry_topology != DIRECT_TOPOLOGY:
+        failures.append("direct completed-call topology mismatch")
+
+    def check_semantic_response(label: str, container: Mapping[str, Any]) -> dict[str, Any]:
         evidence = container.get("response_evidence")
         response = container.get("response")
         if not isinstance(evidence, Mapping) or not isinstance(response, Mapping):
             failures.append(f"{label} response/evidence missing")
-            return
+            return {}
         entry = entry_by_id.get(str(evidence.get("entry_id")))
         if entry is None:
             failures.append(f"{label} references an unknown ledger entry")
-            return
+            return {}
         artifact = load_json(run_root / str(entry["response_artifact"]))
         if dict(evidence) != artifact.get("receipt") or not evidence_matches(response, artifact.get("response")):
             failures.append(f"{label} response is not bound to its raw receipt")
+        invocation = artifact.get("invocation")
+        if not isinstance(invocation, Mapping):
+            failures.append(f"{label} receipt invocation is missing")
+            return {}
+        return {
+            "entry": entry,
+            "invocation": invocation,
+            "receipt": artifact.get("receipt"),
+            "response": artifact.get("response"),
+        }
 
+    panel_attempts = panel.get("attempts", [])
     panel_results = panel.get("results", [])
-    if panel.get("live_count") != 3 or panel.get("failed_count") != 0 or len(panel_results) != 3:
+    if (
+        set(panel) != {"attempts", "degraded", "failed_count", "live_count", "results"}
+        or panel.get("live_count") != 3
+        or panel.get("failed_count") != 0
+        or panel.get("degraded") is not False
+        or len(panel_attempts) != 3
+        or len(panel_results) != 3
+    ):
         failures.append("direct panel cardinality/status mismatch")
+
+    panel_item_fields = {
+        "anonymous_label",
+        "error",
+        "response",
+        "response_evidence",
+        "role",
+        "seat_name",
+        "status",
+    }
+    expected_panel_seats = [seat for _, stage, seat in DIRECT_TOPOLOGY if stage == "panel"]
+    panel_attempt_by_entry: dict[str, Mapping[str, Any]] = {}
+    panel_attempt_entry_ids: list[str] = []
+    for index, attempt in enumerate(panel_attempts):
+        if not isinstance(attempt, Mapping):
+            failures.append(f"panel attempt {index} is not an object")
+            continue
+        bound = check_semantic_response(f"panel attempt {index}", attempt)
+        invocation = bound.get("invocation", {})
+        entry = bound.get("entry", {})
+        expected_seat = expected_panel_seats[index] if index < len(expected_panel_seats) else None
+        if (
+            set(attempt) != panel_item_fields
+            or attempt.get("anonymous_label") != ""
+            or attempt.get("error") is not None
+            or attempt.get("role") != "panel"
+            or attempt.get("seat_name") != expected_seat
+            or attempt.get("status") != "completed"
+            or invocation.get("stage") != "panel"
+            or invocation.get("seat_name") != expected_seat
+            or entry.get("attempt_index") != index
+        ):
+            failures.append(f"panel attempt {index} outer topology/label/status mismatch")
+        entry_id = str(entry.get("entry_id", ""))
+        if entry_id:
+            panel_attempt_entry_ids.append(entry_id)
+            panel_attempt_by_entry[entry_id] = attempt
+
+    expected_result_labels = {
+        "grok45_constraint_auditor": "Seat A",
+        "grok45_researcher": "Seat B",
+        "grok45_adversary": "Seat C",
+    }
+    panel_result_entry_ids: list[str] = []
     for index, result in enumerate(panel_results):
         if isinstance(result, Mapping):
-            check_semantic_response(f"panel result {index}", result)
+            bound = check_semantic_response(f"panel result {index}", result)
+            invocation = bound.get("invocation", {})
+            entry = bound.get("entry", {})
+            bound_seat = invocation.get("seat_name")
+            if (
+                set(result) != panel_item_fields
+                or result.get("error") is not None
+                or result.get("role") != "panel"
+                or result.get("seat_name") != bound_seat
+                or result.get("anonymous_label") != expected_result_labels.get(str(bound_seat))
+                or result.get("status") != "completed"
+                or invocation.get("stage") != "panel"
+                or bound_seat not in expected_panel_seats
+            ):
+                failures.append(f"panel result {index} outer topology/label/status mismatch")
+            entry_id = str(entry.get("entry_id", ""))
+            if entry_id:
+                panel_result_entry_ids.append(entry_id)
+                source_attempt = panel_attempt_by_entry.get(entry_id)
+                if source_attempt is None:
+                    failures.append(f"panel result {index} has no matching dispatch attempt")
+                elif (
+                    result.get("response_evidence") != source_attempt.get("response_evidence")
+                    or not evidence_matches(result.get("response"), source_attempt.get("response"))
+                ):
+                    failures.append(f"panel result {index} differs from its dispatch attempt")
         else:
             failures.append(f"panel result {index} is not an object")
-    check_semantic_response("judge", judge)
-    check_semantic_response("synthesis", synthesis)
+    if (
+        panel_attempt_entry_ids != [
+            str(entry.get("entry_id"))
+            for entry in entries[:3]
+            if isinstance(entry, Mapping)
+        ]
+        or len(set(panel_attempt_entry_ids)) != 3
+        or set(panel_result_entry_ids) != set(panel_attempt_entry_ids)
+        or len(set(panel_result_entry_ids)) != 3
+        or {result.get("seat_name") for result in panel_results if isinstance(result, Mapping)}
+        != set(expected_panel_seats)
+    ):
+        failures.append("direct panel attempts/results must bind three unique independent seats")
+
+    judge_bound = check_semantic_response("judge", judge)
+    judge_invocation = judge_bound.get("invocation", {})
+    judge_response = judge.get("response", {})
+    try:
+        parsed_judgment = (
+            json.loads(judge_response.get("text", ""))
+            if isinstance(judge_response, Mapping)
+            else None
+        )
+    except json.JSONDecodeError:
+        parsed_judgment = None
+    if (
+        set(judge) != {"judgment", "response", "response_evidence"}
+        or judge_invocation.get("stage") != "judge"
+        or judge_invocation.get("seat_name") != "grok45_judge"
+        or parsed_judgment != judge.get("judgment")
+    ):
+        failures.append("judge semantic judgment/topology mismatch")
+
+    synthesis_bound = check_semantic_response("synthesis", synthesis)
+    synthesis_invocation = synthesis_bound.get("invocation", {})
     synthesis_text = synthesis.get("text")
     synthesis_hash = text_hash(synthesis_text) if isinstance(synthesis_text, str) else ""
     if (
-        not isinstance(synthesis.get("response"), Mapping)
+        set(synthesis)
+        != {"author_seat", "mode", "response", "response_evidence", "sha256", "text"}
+        or synthesis.get("author_seat") != "grok45_synthesizer"
+        or synthesis.get("mode") != "client_orchestrated"
+        or synthesis_invocation.get("stage") != "synthesis"
+        or synthesis_invocation.get("seat_name") != "grok45_synthesizer"
+        or not isinstance(synthesis.get("response"), Mapping)
         or synthesis.get("response", {}).get("text") != synthesis_text
         or synthesis.get("sha256") != synthesis_hash
     ):
@@ -461,11 +612,28 @@ def verify_direct_evidence(root: Path = ROOT) -> list[str]:
 
     reviewers = gate.get("reviewers", [])
     passing_reviewers = 0
+    gate_reviewer_entry_ids: list[str] = []
+    expected_gate_seats = [seat for _, stage, seat in DIRECT_TOPOLOGY if stage == "gate"]
     for index, reviewer in enumerate(reviewers):
         if not isinstance(reviewer, Mapping):
             failures.append(f"gate reviewer {index} is not an object")
             continue
-        check_semantic_response(f"gate reviewer {index}", reviewer)
+        bound = check_semantic_response(f"gate reviewer {index}", reviewer)
+        invocation = bound.get("invocation", {})
+        entry = bound.get("entry", {})
+        expected_seat = expected_gate_seats[index] if index < len(expected_gate_seats) else None
+        if (
+            set(reviewer)
+            != {"response", "response_evidence", "seat_name", "status", "verdict"}
+            or reviewer.get("seat_name") != expected_seat
+            or reviewer.get("status") != "completed"
+            or invocation.get("stage") != "gate"
+            or invocation.get("seat_name") != expected_seat
+        ):
+            failures.append(f"gate reviewer {index} outer topology/status mismatch")
+        entry_id = str(entry.get("entry_id", ""))
+        if entry_id:
+            gate_reviewer_entry_ids.append(entry_id)
         verdict = reviewer.get("verdict")
         response = reviewer.get("response")
         try:
@@ -484,6 +652,9 @@ def verify_direct_evidence(root: Path = ROOT) -> list[str]:
             passing_reviewers += 1
     if (
         len(reviewers) != 2
+        or len(set(gate_reviewer_entry_ids)) != 2
+        or {reviewer.get("seat_name") for reviewer in reviewers if isinstance(reviewer, Mapping)}
+        != set(expected_gate_seats)
         or passing_reviewers != 2
         or gate.get("artifact_sha256") != synthesis_hash
         or gate.get("pass_count") != passing_reviewers
@@ -643,8 +814,16 @@ def verify_tree_evidence(root: Path = ROOT) -> list[str]:
     if (
         inputs.get("aggregate_sha256") != TREE_SHA256
         or aggregate_sha256(inputs.get("files", [])) != TREE_SHA256
+        or len(inputs.get("files", [])) != 102
         or observation.get("algorithm_id") != "ri-tree-sha256-v1"
         or observation.get("reproducible_tree_sha256") != TREE_SHA256
+        or observation.get("selected_file_count") != 102
+        or observation.get("source")
+        != {
+            "commit": "7c7649aa7c0356ce344097e1ce344ae654f1b360",
+            "git_tree": "7912e454a8bee1b1d9a04b69079f3e9c61631f4e",
+            "repository": "https://github.com/ahuserious/relentless-inception-grok",
+        }
         or observation.get("historical_value_reproducible_from_this_artifact") is not False
     ):
         failures.append("source/installed tree-hash evidence mismatch")
@@ -704,7 +883,18 @@ def verify_summaries_and_jigs(root: Path = ROOT) -> list[str]:
     ):
         failures.append("native/harness limitation summary mismatch")
     source = summary.get("source", {})
-    if source.get("tested_tree_sha256") != TREE_SHA256 or source.get("installed_tree_sha256") != TREE_SHA256:
+    if source != {
+        "current_release_commit": "7c7649aa7c0356ce344097e1ce344ae654f1b360",
+        "current_release_git_tree": "7912e454a8bee1b1d9a04b69079f3e9c61631f4e",
+        "current_release_tree_file_count": 102,
+        "current_release_tree_sha256": TREE_SHA256,
+        "feature_merge_commit": "1a5321b49ce1695701cf64bbb9c3429b2c6c917a",
+        "grok_build_version": "0.2.106",
+        "historical_native_profile_candidate_commit": "4c9c64712cf4d34cc7a221d04ce857260ac3dccb",
+        "historical_operator_recorded_tree_sha256": "b79e1624b60cad40a1f0995b15a7ee314aa353c3cf731187ee38843368cb9ffa",
+        "repository": "https://github.com/ahuserious/relentless-inception-grok",
+        "version": "0.4.1",
+    }:
         failures.append("campaign source tree digest mismatch")
     binding = load_json(root / "evidence/source-history/direct-run-binding.json")
     manifest = load_json(root / f"evidence/runs/{DIRECT_RUN_ID}/manifest.json")
@@ -737,6 +927,16 @@ def verify_summaries_and_jigs(root: Path = ROOT) -> list[str]:
     ):
         if required not in direct_run_script:
             failures.append(f"direct jig is missing safeguard {required}")
+    source_guard_requirements = (
+        "pinned_commit=7c7649aa7c0356ce344097e1ce344ae654f1b360",
+        "pinned_git_tree=7912e454a8bee1b1d9a04b69079f3e9c61631f4e",
+        '[ "$resolved_commit" != "$pinned_commit" ] || [ "$resolved_git_tree" != "$pinned_git_tree" ]',
+        'diff --quiet "$pinned_commit" -- config/default.json schemas runtime',
+        'ls-files --others --exclude-standard -- config/default.json schemas runtime',
+        'ls-files --others --ignored --exclude-standard -- config/default.json schemas runtime',
+    )
+    if not all(requirement in direct_run_script for requirement in source_guard_requirements):
+        failures.append("direct jig source pin/cleanliness guard mismatch")
     readme = (root / "README.md").read_text(encoding="utf-8")
     limitations = (root / "LIMITATIONS.md").read_text(encoding="utf-8")
     for required in ("Limited-cost", "operator-attested", "compatible", "$0.4396584"):
