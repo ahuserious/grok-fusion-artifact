@@ -1,0 +1,25 @@
+{
+  "candidate_source_commit": {
+    "committed_at": "2026-07-20T01:42:06-04:00",
+    "git_tree": "b780ced15518a32bad17ec1fa0363c5eb0d8b227",
+    "sha": "2963abbe2ccea1a44ee9f3cbd78b8a258ab07daf"
+  },
+  "direct_run": {
+    "completed_at": "2026-07-20T05:40:54.333431+00:00",
+    "config_sha256": "f19fb803c7fcf1e041d4645f4e14e4a42951f5ee77f5b59fcce4302b0d9f4139",
+    "created_at": "2026-07-20T05:36:35.487821+00:00",
+    "input_sha256": "524b3e10fc09c84cdb5a77b54a37080f865b20075894726835aafafcf395ba08",
+    "run_id": "grok-040-frontier-smoke-003",
+    "task_sha256": "78191a29e94f6073d1138a88e70f610012c99ee3faa2ec4c394f27eb936962c9"
+  },
+  "jig_classification": "compatible_reproduction_not_exact_replay",
+  "known_compatibility_observation": "The external orchestration, provider, persistence, and config-loader implementation files are byte-identical between candidate commit 2963abbe2ccea1a44ee9f3cbd78b8a258ab07daf and tested commit 4c9c64712cf4d34cc7a221d04ce857260ac3dccb; runtime package version metadata and native-host files changed.",
+  "receipt_bound_source_commit": null,
+  "schema_version": 1,
+  "why_not_exact": [
+    "The run receipts bind the resolved configuration hash, input hash, prompts, responses, and provider accounting, but do not contain a Git commit or source-tree hash.",
+    "The candidate commit was created after the run completed, so chronology supports it only as a candidate for the working tree used.",
+    "The exact resolved configuration blob and exact task bytes were not retained in this public artifact; only their hashes were retained.",
+    "The public jig uses a bounded isolated override and equivalent task, so it intentionally cannot reproduce the historical run identifiers or semantic output byte-for-byte."
+  ]
+}

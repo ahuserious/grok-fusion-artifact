@@ -1,4 +1,18 @@
 {
+  "attestation": {
+    "commitments_prove": "Only later byte equality against the withheld private chat and update files.",
+    "evidence_class": "operator_attested_curated_observation",
+    "publicly_self_verifying": false,
+    "semantically_unbound_claims": [
+      "the exact prompt bytes",
+      "the exact agent-profile bytes loaded by the host",
+      "the complete Grok command line and invocation flags",
+      "tool availability and tool-use policy",
+      "turn limit",
+      "the semantic interpretation of the private transcript",
+      "the relationship between the private sessions and the separately observed installed tree"
+    ]
+  },
   "attempts": [
     {
       "actual_model_telemetry": "grok-4.5-build",
@@ -35,8 +49,23 @@
     "name": "Grok Build",
     "version": "0.2.106"
   },
+  "operator_observed_invocation": {
+    "agent_profile": "agents/adversarial-review.md",
+    "disable_web_search": true,
+    "max_turns": 1,
+    "no_plan": true,
+    "no_subagents": true,
+    "second_attempt_tools": "none",
+    "verbatim": true
+  },
+  "profile_source_candidate": {
+    "commit": "4c9c64712cf4d34cc7a221d04ce857260ac3dccb",
+    "profile_path": "agents/adversarial-review.md",
+    "profile_sha256": "611dbb5b8ebec3fadd767db89614226af546c1f84b442852061e1e98ad75ef1e"
+  },
   "private_source_withheld": true,
   "schema_version": 1,
   "selected_known_cost_usd": 0.2574256,
-  "task_class": "installed adversarial-review profile smoke"
+  "task_class": "installed adversarial-review profile smoke",
+  "task_publication": "The historical exact task and reviewed artifact are not published. The native jig is a new synthetic compatibility task, not a replay."
 }

@@ -1,0 +1,637 @@
+{
+  "aggregate_sha256": "6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031",
+  "algorithm": {
+    "aggregate": "sha256(utf8(canonical_json(files)))",
+    "canonical_json": "JSON sort_keys=true, separators=(',', ':'), ensure_ascii=false, allow_nan=false",
+    "excluded_directory_names": [
+      ".git",
+      "__pycache__"
+    ],
+    "excluded_file_names": [
+      ".DS_Store"
+    ],
+    "excluded_file_suffixes": [
+      ".pyc"
+    ],
+    "file_digest": "sha256(raw_file_bytes)",
+    "id": "ri-tree-sha256-v1",
+    "mode": "100755 when any executable bit is set; otherwise 100644",
+    "ordering": "ascending POSIX relative path; no Unicode normalization",
+    "symlinks": "rejected"
+  },
+  "files": [
+    {
+      "mode": "100644",
+      "path": ".claude-plugin/marketplace.json",
+      "sha256": "430860fa0c31d1209c04315b51f8776ffd9414c38b2115730c60e3b49cb8c89a",
+      "size_bytes": 585
+    },
+    {
+      "mode": "100644",
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "ff1c1c4d9826270e8cc9a6d182f49db543e3051f01c503bf9b6943e7516e81e7",
+      "size_bytes": 474
+    },
+    {
+      "mode": "100644",
+      "path": ".github/workflows/ci.yml",
+      "sha256": "482ccec213b9796c70d1e7c0abf1a7c51c07a26308a4c6ae25b0dd18725b9022",
+      "size_bytes": 785
+    },
+    {
+      "mode": "100644",
+      "path": ".gitignore",
+      "sha256": "623aae42dde25b6b0bcdc767a9a7145db8745f613d914ba600a48ded166f723e",
+      "size_bytes": 294
+    },
+    {
+      "mode": "100644",
+      "path": ".mcp.json",
+      "sha256": "3b9d4c90118d79cce191284219017c30504d9e4b3080e41a8e813ab1c7ce8054",
+      "size_bytes": 253
+    },
+    {
+      "mode": "100644",
+      "path": "AGENTS.md",
+      "sha256": "8587a8b7eff513a3b85f21f38a7f09a4f988fd9f09e51305b478b1d28acd8119",
+      "size_bytes": 1367
+    },
+    {
+      "mode": "100644",
+      "path": "CHANGELOG.md",
+      "sha256": "6cb3b666761f43e6c014652c128924ed0171aa7875c13f6feb3f32fd563a26e2",
+      "size_bytes": 2291
+    },
+    {
+      "mode": "100644",
+      "path": "CONTRIBUTING.md",
+      "sha256": "a5b1432306274c4cee6670a6a47cda4e8d7b99efa9ecb726cca2b62cb0c3b01c",
+      "size_bytes": 1416
+    },
+    {
+      "mode": "100644",
+      "path": "NOTICE.md",
+      "sha256": "075f89c4fc76095c9c02aeb0cf0f3889752e9c679335222f9e41882bb49a58f2",
+      "size_bytes": 949
+    },
+    {
+      "mode": "100644",
+      "path": "README.md",
+      "sha256": "d35260f909634a4465fae37110a60269d09b60b3bd8b60fccfe0b657617c598c",
+      "size_bytes": 10186
+    },
+    {
+      "mode": "100644",
+      "path": "SECURITY.md",
+      "sha256": "19c48ad1a31821f49f790a2806483704c11e17c9666b7016a85c0af4ab64057f",
+      "size_bytes": 1163
+    },
+    {
+      "mode": "100644",
+      "path": "SKILL.md",
+      "sha256": "5d80a8a67e8696b652e31c0749b05d5406ec5850cf7b422908a36619311e44b5",
+      "size_bytes": 792
+    },
+    {
+      "mode": "100644",
+      "path": "agents/adversarial-review.md",
+      "sha256": "611dbb5b8ebec3fadd767db89614226af546c1f84b442852061e1e98ad75ef1e",
+      "size_bytes": 6128
+    },
+    {
+      "mode": "100644",
+      "path": "agents/architecture-analyzer.md",
+      "sha256": "7bf81486d7cb63d66f05eb2ab2c4aff9daa3fc58b1c38886938b8ad059d6b56b",
+      "size_bytes": 2735
+    },
+    {
+      "mode": "100644",
+      "path": "agents/background-agent.md",
+      "sha256": "1cae82680ec20d3ccee080a4fced951904e9e162b28688503bad3d31acc36c9f",
+      "size_bytes": 3654
+    },
+    {
+      "mode": "100644",
+      "path": "agents/dev-worker.md",
+      "sha256": "cc71a359e76a65f6b1b1733fd7e419eb51c353b2917a5e8d8744c57704e2f753",
+      "size_bytes": 4285
+    },
+    {
+      "mode": "100644",
+      "path": "agents/nexus-graph-synthesizer.md",
+      "sha256": "c1a671f770cccfdee86f2448367e6fd3a0d8adb7e07626317698f623fe7731ed",
+      "size_bytes": 1823
+    },
+    {
+      "mode": "100644",
+      "path": "agents/nexus-graph-writer.md",
+      "sha256": "5883a2be8dc1377c35c4bea30302f88340f475997fc859961fbaccae2a95fdca",
+      "size_bytes": 1688
+    },
+    {
+      "mode": "100644",
+      "path": "agents/planner.md",
+      "sha256": "f963b0e80ea96692f1a1f9f73cdb3ac6733d00b4f57b6669eb9bc140cd88ef6a",
+      "size_bytes": 4488
+    },
+    {
+      "mode": "100644",
+      "path": "agents/rescue-agent.md",
+      "sha256": "5a879ae978c2731f792696ff6f252f55da4cd3f1040884c416800496066b742e",
+      "size_bytes": 4371
+    },
+    {
+      "mode": "100644",
+      "path": "agents/temporal-tester.md",
+      "sha256": "b2e4e445fc9a022ec660cebebad3bd8cb234b50dcf95d6145b1bb623934e9046",
+      "size_bytes": 2300
+    },
+    {
+      "mode": "100644",
+      "path": "agents/test-evaluator.md",
+      "sha256": "659989df58db80b38cedf42df69dfb3301ed42f9baf50fbf4afd2903d18de90e",
+      "size_bytes": 3873
+    },
+    {
+      "mode": "100644",
+      "path": "agents/test-harness-designer.md",
+      "sha256": "2c49c70ef9b0022863453474d824b1f61b20fd315dd8b3605112662bec1f18a0",
+      "size_bytes": 4545
+    },
+    {
+      "mode": "100644",
+      "path": "agents/uv-dagger-deploy.md",
+      "sha256": "1df103ffddeed8dce6d15cb6120b973afb7f8d3fb4c7eff6ad21e127a775bfcd",
+      "size_bytes": 2075
+    },
+    {
+      "mode": "100644",
+      "path": "agents/uv-package.md",
+      "sha256": "af28172a9c8bcd388ccb748b59960c8bc6b78a4628a1c075bc49079c5e6b1c81",
+      "size_bytes": 1633
+    },
+    {
+      "mode": "100644",
+      "path": "agents/uv-workspaces.md",
+      "sha256": "8c22a0ce183bf165fc2854287978cf9f379de1f1670c4c1438c70308fd039465",
+      "size_bytes": 1938
+    },
+    {
+      "mode": "100644",
+      "path": "assets/fusion.config.default.json",
+      "sha256": "9b9a1cb0a5f4030531759fb42b9c7c28792fc1da13aa9ef3246e1a0e4fc4e0bb",
+      "size_bytes": 4755
+    },
+    {
+      "mode": "100644",
+      "path": "assets/secrets.env.example",
+      "sha256": "660977cb60f5c72c343331a8fe12431c6d78e0e5d25d940f61ceee8231dbd2a2",
+      "size_bytes": 533
+    },
+    {
+      "mode": "100644",
+      "path": "assets/tearsheet_template.html",
+      "sha256": "1b356f55a54d2c3c45771501176a10e87c68158e83d9c2663264ce41fb2aa34f",
+      "size_bytes": 1999
+    },
+    {
+      "mode": "100644",
+      "path": "assets/verdict.schema.json",
+      "sha256": "5e49a0ff3875e5c5b5156357bbc4405d03b51b5c5fc660494ef5551a1bd60e17",
+      "size_bytes": 1885
+    },
+    {
+      "mode": "100644",
+      "path": "commands/relentless.md",
+      "sha256": "aa7f8d5e59b07aee6aa34d55cfbe39a805fc6c4292ee01675705440f75100318",
+      "size_bytes": 466
+    },
+    {
+      "mode": "100644",
+      "path": "config/default.json",
+      "sha256": "b61118c45b5c25bd61f1532673bd53af5cf398c8e53939d6b9470490c1f7538e",
+      "size_bytes": 22633
+    },
+    {
+      "mode": "100644",
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "4846dcddefb1a0b634810d677d2a3c7668625a52d67007b61a86890013887ddc",
+      "size_bytes": 4356
+    },
+    {
+      "mode": "100644",
+      "path": "docs/BENCHMARK_PROTOCOL.md",
+      "sha256": "c64b1069d6ef2aee392189b6697af42e79ca142a650bf6f81a2516d025051e87",
+      "size_bytes": 2340
+    },
+    {
+      "mode": "100644",
+      "path": "docs/CONFIGURATION.md",
+      "sha256": "764d8582879abdbeeda780cc3ddf362d2120ac354fbdc6a8afd5c42bf085ce66",
+      "size_bytes": 7017
+    },
+    {
+      "mode": "100644",
+      "path": "docs/RELEASE_EVIDENCE.md",
+      "sha256": "a4b8b29471f150f70cf22671ce18217ae44824064b9802901379771c5930a9c5",
+      "size_bytes": 4630
+    },
+    {
+      "mode": "100644",
+      "path": "docs/SECURITY.md",
+      "sha256": "b2e689a0e285b69b6446913ae364723b1ead3a9055900bf242bdf32b9c4340c5",
+      "size_bytes": 2771
+    },
+    {
+      "mode": "100644",
+      "path": "docs/VALIDATION.md",
+      "sha256": "48c9845697e94e087fd72446fc87b08f081590dcf5ff55443d5a1a79657a8cbe",
+      "size_bytes": 3207
+    },
+    {
+      "mode": "100644",
+      "path": "docs/img/fusion-invoke-fable.png",
+      "sha256": "b9824880dfac6c876310e78a1c492e9ffbea7fc71808bfbc216ba3adb17dd0bb",
+      "size_bytes": 52762
+    },
+    {
+      "mode": "100644",
+      "path": "docs/img/fusion-panel-fuse.png",
+      "sha256": "24c8fd0e7abc35a5972654a133c3fa1bc790a23333858a584e9b597206b8a080",
+      "size_bytes": 112487
+    },
+    {
+      "mode": "100644",
+      "path": "examples/native-grok45-host.json",
+      "sha256": "933ea72af18f2378c6e068fc02f914b334cb2824728590dd31c9572cdebd2b32",
+      "size_bytes": 712
+    },
+    {
+      "mode": "100644",
+      "path": "examples/openrouter-gpt56-sol-panel.json",
+      "sha256": "50bc510ff66c920d5927f396da07bb73b7c89706c313a1ede370226458a25296",
+      "size_bytes": 728
+    },
+    {
+      "mode": "100644",
+      "path": "examples/openrouter-native-fusion.json",
+      "sha256": "b095ac9a2a3380674b1bcd2b4ebac983b4f90e406207408fb06139e39b67fe44",
+      "size_bytes": 1451
+    },
+    {
+      "mode": "100644",
+      "path": "examples/trusted-router-mixed-panel.json",
+      "sha256": "e706722940a7ffd8176fe738ac3253e9896fbe140bd52a7241643cbac9f17e4d",
+      "size_bytes": 1747
+    },
+    {
+      "mode": "100644",
+      "path": "examples/xai-grok45-direct.json",
+      "sha256": "7391b65cb51f7958e89dc50ce6e1d58c071b59bd67a445c49aedf8204ed6d656",
+      "size_bytes": 1151
+    },
+    {
+      "mode": "100644",
+      "path": "hooks/hooks.json",
+      "sha256": "1f43e21c5eecc93f2654721e5052ee655a8fe37c024d2fcd287481722dbfdf3d",
+      "size_bytes": 659
+    },
+    {
+      "mode": "100644",
+      "path": "hooks/lifecycle_audit.py",
+      "sha256": "dcb97ba50a5ec51fe310025523358f8e246c72288981e53b09b599cd8c7c9749",
+      "size_bytes": 1557
+    },
+    {
+      "mode": "100755",
+      "path": "install.sh",
+      "sha256": "8af1186ffb046bde5ea10142ebc5ce7beac085d160603f057a32c9215414b2ce",
+      "size_bytes": 1349
+    },
+    {
+      "mode": "100644",
+      "path": "plugin.json",
+      "sha256": "d81270ef4162a4fd27894832fc85a11ba8a266745248c611ac6906880f0865fc",
+      "size_bytes": 408
+    },
+    {
+      "mode": "100644",
+      "path": "references/adversarial-gates.md",
+      "sha256": "1cf6fa16738cc8c6d71529dba51b2ab7db46e6b8c38cab31829e21bd84a48d98",
+      "size_bytes": 15779
+    },
+    {
+      "mode": "100644",
+      "path": "references/execution-modes.md",
+      "sha256": "7432116e31bcaf38bd186a6f76b6617d540ef94e779affd255da1523f966d7b0",
+      "size_bytes": 5288
+    },
+    {
+      "mode": "100644",
+      "path": "references/fusion-deliberation.md",
+      "sha256": "b360c0b9f9441efdff54b753d59ac0bb29eec5c203e52b0372f8ef51bfcb0f20",
+      "size_bytes": 7991
+    },
+    {
+      "mode": "100644",
+      "path": "references/planning-modes.md",
+      "sha256": "764dccf43b322c427ca66fe648921c73b1afad27d9a51b493550d75db6ea1d5e",
+      "size_bytes": 4732
+    },
+    {
+      "mode": "100644",
+      "path": "references/prereqs.md",
+      "sha256": "68fe476a4b1998883369729a7f38f1364ae6874131a06ddc9e0d7bc66a7aa647",
+      "size_bytes": 7084
+    },
+    {
+      "mode": "100644",
+      "path": "references/rescue-mode.md",
+      "sha256": "95cc3f774a20853f120be1f74411b59879d9d2252215f84244a85c25efd0ff84",
+      "size_bytes": 10411
+    },
+    {
+      "mode": "100644",
+      "path": "references/runtime-and-hooks.md",
+      "sha256": "355d9067331e3b9518619d0c59b7e43abbc46d47d71d0b9f4999c7af4679a683",
+      "size_bytes": 9635
+    },
+    {
+      "mode": "100644",
+      "path": "references/settings-and-flags.md",
+      "sha256": "c96321cc09ae6f1863c43f8f8bda4100dd9360d2d27d5dfb000d502517aa47d2",
+      "size_bytes": 6986
+    },
+    {
+      "mode": "100644",
+      "path": "references/setup.md",
+      "sha256": "09aef9ff7cb3d1134972a94a7681eaf936245e419534e2aa1762f8d42f585fe7",
+      "size_bytes": 13750
+    },
+    {
+      "mode": "100644",
+      "path": "references/shipping.md",
+      "sha256": "252baccf0d6e97d44c5f60ef53ec67a0ab2c9a98f808a1acb5dce6dfc62a6558",
+      "size_bytes": 4220
+    },
+    {
+      "mode": "100644",
+      "path": "references/team-roster.md",
+      "sha256": "a783f554e438653fba97db9ea7e93969b74b1b7b26db07ac2095ac50bf93713c",
+      "size_bytes": 3729
+    },
+    {
+      "mode": "100755",
+      "path": "runtime/mcp_server.py",
+      "sha256": "9f654f11968df77876231466da2332ebf2e5839c6dac290c4e6aa4765d7d8519",
+      "size_bytes": 11830
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/__init__.py",
+      "sha256": "2296a7167381aefa354efac2f1d2c2d555e669d5379e167b9c5674517f5d9d78",
+      "size_bytes": 78
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/__main__.py",
+      "sha256": "0f7d54f3fbb1f79a85eb8110f11793db99da6f3c61ee979de5abe9a1b5f3fdb3",
+      "size_bytes": 49
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/cli.py",
+      "sha256": "0bdee2b7aad2a2ee393575dacde2ab368e9027e78b6dc079a0200e53dd4c9e9a",
+      "size_bytes": 9782
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/config.py",
+      "sha256": "bc6a5e3c907877afc1d6bb9fcd3a397782350a8b71acb6edb45d43d301409868",
+      "size_bytes": 37267
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/errors.py",
+      "sha256": "353e1ad944947a422589e6104e3a467ad1786926155509ed45c1840ca8d95518",
+      "size_bytes": 768
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/execution.py",
+      "sha256": "48f76fa16b7d75fe680eb04c55e68db07ca51fa33292730c727dd2cabff1bdab",
+      "size_bytes": 18597
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/orchestrator.py",
+      "sha256": "e086508913cdd7f04fe6472846e23bdb23183a7b4f57236899db2db3b3d4b0e6",
+      "size_bytes": 110815
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/prompts.py",
+      "sha256": "9ebd653b5d91efcbc7c478f0a0a25519d57816be74a7f0a6e1c2be81b780d6b1",
+      "size_bytes": 9583
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/providers.py",
+      "sha256": "1fc931fe56d47aab816bfbfe7d574b9a5519cba7e8bb81630961d9cbca3f1018",
+      "size_bytes": 60034
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/state.py",
+      "sha256": "f6ec0a5840d177e2b097cfdc9dfaf958928f926043f2b91c0dc5a26f79ae0799",
+      "size_bytes": 65692
+    },
+    {
+      "mode": "100644",
+      "path": "runtime/relentless_inception/types.py",
+      "sha256": "8524618edf1fdda3f053224ce771dba594b7bb26d2a40a55ac8004655378aff8",
+      "size_bytes": 1705
+    },
+    {
+      "mode": "100644",
+      "path": "schemas/config.schema.json",
+      "sha256": "dcf83dcfad8e04916583dc10f0b67490a930660af8a1d8d10a16983f16c2d301",
+      "size_bytes": 77028
+    },
+    {
+      "mode": "100644",
+      "path": "schemas/judge.schema.json",
+      "sha256": "bdc2c9a75fc2b6fcbccea4920a30b5e03eec0aa08f2326bea12c26e4dd65499e",
+      "size_bytes": 909
+    },
+    {
+      "mode": "100644",
+      "path": "schemas/verdict.schema.json",
+      "sha256": "5170b05177a6ee0cdcb28e7329f3d12c3182c9fc20b043b31da7c53cf53c5f69",
+      "size_bytes": 1248
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/adversarial_review.sh",
+      "sha256": "87ae3b9e434e0bb5047fc4ab8b9d4043f3a3e986a57f4d222e7a304ad0fe7b2a",
+      "size_bytes": 25145
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/check_prereqs.sh",
+      "sha256": "5779d0efe2199c3ce98d015d2b04aa45842837d3dbfa115b8d8a944bcf94f314",
+      "size_bytes": 14518
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/install_hooks.sh",
+      "sha256": "84bfe59a08c9f0317ba199fb2766dc7dd5841fd8cd269273c68d732fab82ec69",
+      "size_bytes": 4298
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/orchestrator.py",
+      "sha256": "e17e75668fce3ea30849422a42da1e5111104a23e802316afc95fd44e021276d",
+      "size_bytes": 8375
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/relentless_relay.sh",
+      "sha256": "3c2dae8d40bcd486dee144cc1c848b9b84f61315add2423550770aa54227ff91",
+      "size_bytes": 8520
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/rescue.sh",
+      "sha256": "313a0bde2a302cb3938997c83920bf3499ba7c1159d0c57c0250b303d1c5c1ef",
+      "size_bytes": 9675
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/seat_drivers/claude_seat.sh",
+      "sha256": "cd061f6a5f68299171560b3f3d4f7b558a994273d52c41a80c549633914e6e65",
+      "size_bytes": 5300
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/seat_drivers/http_seat.sh",
+      "sha256": "a5a0f6768ed7a6da32d81013c8e9c46f94b4b20b9a663b3cfd76397ad920c244",
+      "size_bytes": 8300
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/shipping/dagger_deploy.sh",
+      "sha256": "88f53d08b84c971a023bc50086e835ac2f7747321284af7b3cfbb4e8d68eae84",
+      "size_bytes": 737
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/shipping/uv_package.sh",
+      "sha256": "69631b86f1074d305e2867f855b81fb5f1458a1b3296477eb34731273f919d3d",
+      "size_bytes": 622
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/shipping/uv_workspaces.sh",
+      "sha256": "2cd646d82c6dc916a288ae453532ab4db1f1bde76b5eb50addf54c2bdc06c697",
+      "size_bytes": 409
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/stall_watchdog.sh",
+      "sha256": "f331604d40f1ae0f71ff668a349801db78ac603ff51d8a9635141ee85065108a",
+      "size_bytes": 3360
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/status_line.sh",
+      "sha256": "98b8f312af3d99e0209f904ad675274c8f258c920d64942f7b783bbf92f7a8db",
+      "size_bytes": 2380
+    },
+    {
+      "mode": "100755",
+      "path": "scripts/tearsheet.py",
+      "sha256": "4838419b126c65bafbce7f4c8654be312bd3456233d3080169dddd5bb4e165ee",
+      "size_bytes": 5616
+    },
+    {
+      "mode": "100644",
+      "path": "skills/relentless-config/SKILL.md",
+      "sha256": "3a28282d527ee4fdd5268237b72a53554e857dc7531d1c4d98dbecb968c35f82",
+      "size_bytes": 2618
+    },
+    {
+      "mode": "100644",
+      "path": "skills/relentless-inception/SKILL.md",
+      "sha256": "41b40269a3bb388e47dd7c55914ec407ddf227e259582ef355029d1691359384",
+      "size_bytes": 3779
+    },
+    {
+      "mode": "100644",
+      "path": "skills/relentless-review/SKILL.md",
+      "sha256": "fae89a8447865fb83c7c17754a3d481eef295d047ec3d392dbc04ff4960c1749",
+      "size_bytes": 1990
+    },
+    {
+      "mode": "100644",
+      "path": "tests/__init__.py",
+      "sha256": "0f752ac7676319a342307b31600e1a7d7db7cc5b8e8ddefd1fbc5f8e83d505cd",
+      "size_bytes": 73
+    },
+    {
+      "mode": "100644",
+      "path": "tests/support.py",
+      "sha256": "c082e49ff9d9d0bce75681f55dad41d6381e128111f6949867f9b3ff3ca896a4",
+      "size_bytes": 8908
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_config.py",
+      "sha256": "ec30b021daa0fed81831c4178b28a6cb08a15960c6b8c56adf4216ba55900b2c",
+      "size_bytes": 19047
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_execution.py",
+      "sha256": "d5d4e43d303338a51dd7b69107d9a2f58eda4ff69e1c922aa89a2e483c343484",
+      "size_bytes": 16654
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_mcp_server.py",
+      "sha256": "48f4bbf415d52e55bbf06e95db686eeaafbc2622563f5cfd0550a76855c5684c",
+      "size_bytes": 9095
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_orchestrator.py",
+      "sha256": "a78e75beee3cab32030b0618aff33955d7b2def211dbd6f84f140ecd69ca969d",
+      "size_bytes": 97062
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_package_integrity.py",
+      "sha256": "47dbc283d82fd95918bb4509c41d4d6f71850013dd7ed79f0d019901064101d6",
+      "size_bytes": 7420
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_prompts.py",
+      "sha256": "b61cae4c744c2eb9a236d3653b29abb089976599fe4f2b30c1549d0c53ce4fba",
+      "size_bytes": 7008
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_providers.py",
+      "sha256": "14dacd5f30fd6126ca39e14d090729040c52873263cfa25e854853a32710905b",
+      "size_bytes": 71695
+    },
+    {
+      "mode": "100644",
+      "path": "tests/test_state.py",
+      "sha256": "5e3ccbee1eaab6fed6003f834614de57c58c3bd19316f5608bc3184c66692e76",
+      "size_bytes": 40748
+    }
+  ],
+  "schema_version": 1
+}

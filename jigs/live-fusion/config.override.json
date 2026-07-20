@@ -1,0 +1,25 @@
+{
+  "profiles": {
+    "maximum_intelligence": {
+      "budgets": {
+        "approval_threshold_usd": 0.5,
+        "enforcement": "hard_stop",
+        "max_calls": 7,
+        "max_cost_usd": 0.5,
+        "max_input_tokens": 80000,
+        "max_output_tokens": 45000,
+        "max_reasoning_tokens": 30000,
+        "max_tool_calls": 1,
+        "max_total_tokens": 125000,
+        "max_wall_seconds": 900,
+        "per_provider_max_cost_usd": {
+          "xai_direct": 0.5
+        },
+        "reserve_fraction_for_synthesis_and_gates": 0.3,
+        "unknown_cost_policy": "fail_closed",
+        "warning_fraction": 0.8
+      }
+    }
+  },
+  "secret_env_files": []
+}

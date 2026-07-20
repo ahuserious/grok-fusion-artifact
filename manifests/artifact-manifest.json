@@ -3,8 +3,8 @@
   "files": [
     {
       "path": ".github/workflows/verify.yml",
-      "sha256": "f25965594413ac3e0545f8e450c48ce13ab100a498f81a08ff10e1d6b1b6aeb8",
-      "size_bytes": 344
+      "sha256": "7acffb2a53650c834fddbd4824f146203cc76897b3e7208e8f913cd9339c0c16",
+      "size_bytes": 398
     },
     {
       "path": ".gitignore",
@@ -18,8 +18,8 @@
     },
     {
       "path": "LIMITATIONS.md",
-      "sha256": "f28b19f791312344e975d51914bea0fb620e86c76fd3f35eada16fcb83d67237",
-      "size_bytes": 2287
+      "sha256": "9ad2e17205e0de52006d226150622088e8f4af90107c7ae7a7a8553c0e04f3fd",
+      "size_bytes": 3165
     },
     {
       "path": "NOTICE.md",
@@ -28,18 +28,18 @@
     },
     {
       "path": "PROVENANCE.md",
-      "sha256": "0dfe625284fdc8875031b513de532c513665af1ce073dae781152dc532e89f6d",
-      "size_bytes": 2232
+      "sha256": "9ceb80495875e038dc8cdbc47bd9163b7ff1368b0dd21ef3377015256b451777",
+      "size_bytes": 2926
     },
     {
       "path": "README.md",
-      "sha256": "f189cd6441abd13f9017f7698e3ff7404d56ca540f32e53a20f81e31ad142980",
-      "size_bytes": 4126
+      "sha256": "0efb74d700aa458201d908e15a0fd9c90f49706ceb9708418082b2155174328a",
+      "size_bytes": 4955
     },
     {
       "path": "REPRODUCE.md",
-      "sha256": "e08ae433581999fd62a418dabd84de5869a6fae33142fbf85d39793df5c9b6a1",
-      "size_bytes": 814
+      "sha256": "c328e3aad9019d620b4a23c6f86bfb236541de94c2c03a56efbb5f81f607ba78",
+      "size_bytes": 1564
     },
     {
       "path": "SECURITY.md",
@@ -53,33 +53,33 @@
     },
     {
       "path": "docs/FINDINGS.md",
-      "sha256": "6140407de02b42615a61f754f1c218117edb1eaa6fd52396924e20eda69b62b0",
-      "size_bytes": 1868
+      "sha256": "dc2e256976f9d096a83a82b3b16d9ce81f47d435b848179e92ba7b8669ec6b3e",
+      "size_bytes": 1962
     },
     {
       "path": "docs/LESSONS.md",
-      "sha256": "6d52ab95fd641dff9056ceb0ef49de9c3877b2caa76858875fe5ba1b665d0b84",
-      "size_bytes": 754
+      "sha256": "3d3b448e4cd73713b20a652529caa675460c8bed46b0d0f941beeb2a33a90f19",
+      "size_bytes": 819
     },
     {
       "path": "docs/METHODOLOGY.md",
-      "sha256": "ed7a3fb3bb6d636b2d7d47cac4f405db7c5a7536502545d271f69146b8ad4a78",
-      "size_bytes": 1374
+      "sha256": "91c8b106511c9395d0e182372ec7ab7f42ab7f340bf20b8ab4593abcbfbaa3b3",
+      "size_bytes": 1775
     },
     {
       "path": "evidence/README.md",
-      "sha256": "d7be2ed0ab16e921180d542e5ba518858b990a503bed99be00267cc03720d4a7",
-      "size_bytes": 403
+      "sha256": "8b8d4a4be36c87b604a944011b656e491be10986416eb4f09645ca95cdc1d81c",
+      "size_bytes": 623
     },
     {
       "path": "evidence/campaign-summary.json",
-      "sha256": "b25b05389aee83886cb9b271d585616a2bf5abff8b05bfbb642b465f397ba067",
-      "size_bytes": 2410
+      "sha256": "7708d36efadde99fd034aa302416cb22b7792ca3f85595466bb9d40544ec599a",
+      "size_bytes": 2681
     },
     {
       "path": "evidence/native-build/native-smoke-receipt.json",
-      "sha256": "d43245543d30bea2c10b8ef8c3d238b4dcf8e79c8d71b109899e059b9ba38923",
-      "size_bytes": 1281
+      "sha256": "9f3b6c4bed2aa7936df406b0864c796d0da4364803ba9119baa9845a3836ae38",
+      "size_bytes": 2578
     },
     {
       "path": "evidence/preflight/grok-040-frontier-smoke-001/ledger.json",
@@ -182,14 +182,34 @@
       "size_bytes": 31809
     },
     {
+      "path": "evidence/source-history/direct-run-binding.json",
+      "sha256": "280ec5d433354d97a1d0c932314c2a79040ed983770f2fb2fc4dada8935d13c4",
+      "size_bytes": 1767
+    },
+    {
+      "path": "evidence/source-tree/tree-hash-inputs.json",
+      "sha256": "c2e22bcc997fa9ad3cff19e851faa39fe63aff9895c6c179aed4b315248171ce",
+      "size_bytes": 20107
+    },
+    {
+      "path": "evidence/source-tree/tree-hash-observation.json",
+      "sha256": "dc6fea531991309a22f14b4b9df5b801ecf00697b06dd352a0c666e866863907",
+      "size_bytes": 977
+    },
+    {
       "path": "jigs/README.md",
-      "sha256": "6fc03e01dd93529f09b93a3a77f5f6fa4d7d1293ab098ceeee9d0892d249e1cf",
-      "size_bytes": 557
+      "sha256": "d6045eb4b2514b1fe177823169e8cf7d8e7b79907757c0c6744a5caab5c743c0",
+      "size_bytes": 936
+    },
+    {
+      "path": "jigs/live-fusion/config.override.json",
+      "sha256": "82d6eb70cabe2202a11f2a250ffd39419e220f2a5aee1b45c6ed4b6b3c49750e",
+      "size_bytes": 662
     },
     {
       "path": "jigs/live-fusion/run.sh",
-      "sha256": "33e6d12af7e3cf6babe1e0b41f04a8500ed60b6cd81cbe96e05010001ef96946",
-      "size_bytes": 487
+      "sha256": "4ea892c690ae60e988c9f944117f039a64a74820e9fac2bdf14e59b0d1a6f4fd",
+      "size_bytes": 2353
     },
     {
       "path": "jigs/live-fusion/task.txt",
@@ -197,19 +217,34 @@
       "size_bytes": 321
     },
     {
+      "path": "jigs/native-build/artifact.json",
+      "sha256": "37287a5ced76672db028c7b1c849a2c08fde73d3c17123a96a1d0cf43ae9b118",
+      "size_bytes": 887
+    },
+    {
+      "path": "jigs/native-build/criteria.json",
+      "sha256": "3f8b8b888752d07bfcd921faca0ed4a1100de841aa77b95033ba3a59f0bc0896",
+      "size_bytes": 1167
+    },
+    {
+      "path": "jigs/native-build/render_prompt.py",
+      "sha256": "6dae4cc788d9db86ff1df883c8b50a167cc304c3d16faece11c2bd281088dc62",
+      "size_bytes": 919
+    },
+    {
       "path": "jigs/native-build/run.sh",
-      "sha256": "a74b8c1ca5254ca260634d74e80746cb70c885169ac8fbefeff1e01635426dea",
-      "size_bytes": 719
+      "sha256": "fce52552aafa7ef20ea22fcdd2a0bd53f78ab44ce1ac47bb2f7abe90b67bf552",
+      "size_bytes": 1607
     },
     {
       "path": "jigs/native-build/task.txt",
-      "sha256": "9f431c14af517f7b1b623179e89e94dbffd4d8ccd864b65ddc8ed70dfce2952d",
-      "size_bytes": 194
+      "sha256": "1d912d5767f63cb98b48dc8134c37ed840caba5927e92dc61024cf3b924663dd",
+      "size_bytes": 428
     },
     {
       "path": "results/direct-xai-summary.json",
-      "sha256": "d78b66364f49935f822faf7514cefbf362de600458ebcb2dec2dfe3dcd1aa52f",
-      "size_bytes": 429
+      "sha256": "30a0f325661cfd918aa7c4595127a060ee986ae6a49828bc57e410b4f7425c1b",
+      "size_bytes": 618
     },
     {
       "path": "results/host-harness-status.json",
@@ -218,8 +253,8 @@
     },
     {
       "path": "results/native-build-summary.json",
-      "sha256": "2b6cd4fbc9a793cc49db6a1d8b29444883dc234a9c0620f5700400748bfc697c",
-      "size_bytes": 272
+      "sha256": "b86bd29093d25e074af085144d8e33d184b6be24bb22fbb119eb76d88d5f7a91",
+      "size_bytes": 351
     },
     {
       "path": "schemas/artifact-manifest.schema.json",
@@ -232,9 +267,19 @@
       "size_bytes": 876
     },
     {
+      "path": "scripts/tree_hash.py",
+      "sha256": "2b9ac62f69cc01b9d36d7bfb1b573cb678ba992270af63619ab54c11171b381f",
+      "size_bytes": 6645
+    },
+    {
       "path": "scripts/verify_artifact.py",
-      "sha256": "9bdf8c9e31b0512dee6937909fe651045a6152665baed4fbcb137e4319b21e9f",
-      "size_bytes": 7189
+      "sha256": "dda6622c8c3d3cd7f4fbabc042e93875df055f479560a9d5a6bb6c9c2e2a7e33",
+      "size_bytes": 35192
+    },
+    {
+      "path": "tests/test_verify_artifact.py",
+      "sha256": "313e310c8871c033beeeb3d8230b382f0e7ce3a10fb66fefebfaafe43dd44f11",
+      "size_bytes": 5147
     }
   ],
   "generated_by": "scripts/verify_artifact.py --refresh",

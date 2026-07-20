@@ -2,7 +2,7 @@
 
 Both wrappers require `--execute`; neither embeds credentials or silently installs dependencies.
 
-- `live-fusion/run.sh` calls the pinned runtime's maximum-intelligence direct-xAI profile.
-- `native-build/run.sh` resolves the installed plugin path and runs its native adversarial-review profile with exact `grok-4.5` at `high` and no tools.
+- `live-fusion/run.sh` pins the tested merged source commit, ignores mutable user config, uses an isolated data directory, and caps dispatch at seven attempts with an observed-$0.50 stop. Run `RI_GROK_SOURCE=/path/to/checkout ./jigs/live-fusion/run.sh --preview` first.
+- `native-build/run.sh` renders a fully published synthetic artifact and seven criteria, resolves the installed plugin path, and runs its native adversarial-review profile with exact `grok-4.5` at `high`, one turn, and no tools. Its preview discloses that the host command has no dollar hard cap.
 
-The original task text was synthetic release-review material. `live-fusion/task.txt` and `native-build/task.txt` provide equivalent bounded tasks, not a claim of byte-identical private prompts.
+`live-fusion/task.txt` is an equivalent bounded task, not the historical task bytes. The native task, artifact, and criteria are a new self-contained compatibility fixture. Neither wrapper claims byte-identical replay of private prompts or outputs.

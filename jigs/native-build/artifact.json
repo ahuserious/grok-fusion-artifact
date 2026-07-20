@@ -1,0 +1,32 @@
+{
+  "claimed_status": "ready",
+  "known_limitations": [
+    "The validation sample is intentionally limited to one synthetic package because this is a cost-bounded smoke task."
+  ],
+  "release": {
+    "commit": "0123456789abcdef0123456789abcdef01234567",
+    "file": {
+      "path": "dist/synthetic_release-1.2.3-py3-none-any.whl",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "size_bytes": 4096
+    },
+    "name": "synthetic-release",
+    "version": "1.2.3"
+  },
+  "schema_version": 1,
+  "verification": {
+    "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "model": "grok-4.5",
+    "reasoning_effort": "high",
+    "secret_scan": {
+      "findings": 0,
+      "status": "passed"
+    },
+    "unit_tests": {
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 120,
+      "total": 120
+    }
+  }
+}

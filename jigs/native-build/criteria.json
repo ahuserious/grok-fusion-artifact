@@ -1,0 +1,35 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC1",
+      "requirement": "schema_version is 1, claimed_status is ready, and release name/version/commit are nonempty with a 40-character lowercase hexadecimal commit"
+    },
+    {
+      "id": "AC2",
+      "requirement": "release.file has a positive size and a 64-character lowercase hexadecimal SHA-256"
+    },
+    {
+      "id": "AC3",
+      "requirement": "verification.artifact_sha256 exactly equals release.file.sha256"
+    },
+    {
+      "id": "AC4",
+      "requirement": "unit test exit_code and failed are zero, passed equals total, and total is positive"
+    },
+    {
+      "id": "AC5",
+      "requirement": "secret scan status is passed with zero findings"
+    },
+    {
+      "id": "AC6",
+      "requirement": "verification model is exactly grok-4.5 and reasoning_effort is exactly high"
+    },
+    {
+      "id": "AC7",
+      "requirement": "known_limitations explicitly discloses the cost-bounded single-sample scope"
+    }
+  ],
+  "gate": "phase",
+  "pass_rule": "Pass only when every acceptance criterion is satisfied by the supplied artifact and no internal contradiction exists.",
+  "schema_version": 1
+}

@@ -8,11 +8,11 @@ The execution handoff remained fail-closed: it was ready for the host workflow b
 
 ## 2. Native and direct model provenance differ usefully
 
-Direct xAI returned exact `grok-4.5`. Native Grok Build was requested as `grok-4.5` at `high`, while telemetry named the served implementation `grok-4.5-build`. Recording both prevents a host build alias from being mistaken for a different user selection.
+Direct xAI receipts verify exact `grok-4.5`. The native operator-attested receipt records a `grok-4.5`/`high` request while telemetry named `grok-4.5-build`. Recording both prevents a host build alias from being mistaken for a different user selection, but the public bytes cannot independently verify the private native invocation.
 
 ## 3. The failed native attempt found an invocation problem
 
-The first native attempt allowed a tool path while limiting the agent to one turn. It consumed one call and stopped cancelled before a verdict turn. The second used a bounded tool-less prompt and ended normally with the required structured `pass`. The failure remains part of the cost record instead of being hidden as a warm-up.
+The operator attributed the first native cancellation to allowing a tool path under a one-turn limit, then recorded a tool-less second attempt ending with the required structured `pass`. Because command/transcript bytes are withheld, the causal diagnosis is an operator observation, not a publicly reproducible finding. Both costs remain visible.
 
 ## 4. Preflight failure is not provider quality
 

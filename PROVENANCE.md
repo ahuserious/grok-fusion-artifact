@@ -7,11 +7,12 @@
 - Merged release commit: `1a5321b49ce1695701cf64bbb9c3429b2c6c917a`
 - Shared tested/merged tree: `1b5c10ef0835d8c6f5eb9db9aa45bac3e8d3e3c3`
 - Plugin version: `0.4.1`
-- Tested source tree SHA-256: `b79e1624b60cad40a1f0995b15a7ee314aa353c3cf731187ee38843368cb9ffa`
-- Installed plugin tree SHA-256: `b79e1624b60cad40a1f0995b15a7ee314aa353c3cf731187ee38843368cb9ffa`
+- Reproducible tested source tree SHA-256: `6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031`
+- Reproducible installed plugin tree SHA-256: `6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031`
+- Historical operator-recorded tree value: `b79e1624b60cad40a1f0995b15a7ee314aa353c3cf731187ee38843368cb9ffa` (original serialization unpublished; retained as history, not a reproducible claim)
 - Grok Build: `0.2.106 (bde89716f679)`
 
-The matching source/installed tree hashes cover relative paths, executable modes, and per-file SHA-256 while excluding Git metadata, bytecode, and `.DS_Store`.
+The matching reproducible hashes cover 102 relative paths, executable modes, sizes, and per-file SHA-256 values while excluding Git metadata, bytecode, and `.DS_Store`. [`scripts/tree_hash.py`](scripts/tree_hash.py) specifies the algorithm, and [`evidence/source-tree/tree-hash-inputs.json`](evidence/source-tree/tree-hash-inputs.json) publishes every input record.
 
 ## Direct xAI run
 
@@ -23,11 +24,11 @@ The matching source/installed tree hashes cover relative paths, executable modes
 - Task hash: `78191a29e94f6073d1138a88e70f610012c99ee3faa2ec4c394f27eb936962c9`
 - Gated synthesis SHA-256: `c6dd3c8ae4da342592dab0814a9f1020288fa0e2a3dd17806532c286306d627a`
 
-The published run excludes the mutable lock and local aggregate `result.json`. All semantic artifacts and response files referenced by the ledger are retained. The run was created on the 0.4.0 release candidate; 0.4.1 changed native-host metadata only.
+The published run excludes the mutable lock and local aggregate `result.json`. All semantic artifacts and response files referenced by the ledger are retained. The receipts do not bind a source commit. Repository chronology makes `2963abbe2ccea1a44ee9f3cbd78b8a258ab07daf` a candidate, not proof; it was committed after the run. See [`evidence/source-history/direct-run-binding.json`](evidence/source-history/direct-run-binding.json).
 
 ## Native Grok Build smoke
 
-Both attempts used the installed `agents/adversarial-review.md` profile and requested exact `grok-4.5` at `high`, the strongest effort exposed by Grok Build 0.2.106. Host telemetry identified the served build as `grok-4.5-build`.
+The operator recorded both attempts as using the installed `agents/adversarial-review.md` profile and requesting exact `grok-4.5` at `high`. Host telemetry was recorded as `grok-4.5-build`. These are operator-attested observations: the withheld session bytes and public source tree are not cryptographically linked.
 
 Private source commitments:
 

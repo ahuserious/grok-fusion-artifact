@@ -15,8 +15,16 @@
       "grok-4.5"
     ]
   },
+  "reproduction_class": "compatible_reproduction_not_exact_replay",
   "run_id": "grok-040-frontier-smoke-003",
   "schema_version": 1,
   "status": "completed",
+  "tokens": {
+    "cached": 896,
+    "input": 34254,
+    "output": 19208,
+    "reasoning": 6196,
+    "total": 53462
+  },
   "unknown_cost_calls": 0
 }

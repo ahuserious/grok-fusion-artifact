@@ -7,4 +7,4 @@
 - Role diversity within Grok 4.5 is multi-agent deliberation, not cross-model fusion.
 - Do not infer Grok-host benchmark coverage from a Codex-host run that calls Grok API seats.
 - Default reproduction jigs to refusal and require explicit billable execution.
-- Curated receipts can prove model/cost/status facts without publishing private system prompts or encrypted sessions.
+- Curated receipts can report private model/cost/status observations safely, but hashes of withheld bytes prove only later byte equality—not the semantic claims inside those bytes.

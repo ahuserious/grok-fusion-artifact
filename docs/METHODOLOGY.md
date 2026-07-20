@@ -10,12 +10,14 @@ The ledger is the source of truth for calls, model provenance, usage, cost, warn
 
 ## Native receipt
 
-The curated receipt records two attempts independently. It does not merge the cancelled attempt into the successful one. Requested model/effort, actual telemetry model, usage, cost, stop reason, verdict, and private-file commitments are preserved.
+The curated receipt records two attempts independently. It does not merge the cancelled attempt into the successful one. Requested model/effort, actual telemetry model, usage, cost, stop reason, verdict, and private-file commitments are operator-attested observations. The receipt explicitly lists which invocation semantics remain publicly unbound.
 
 ## Version comparison
 
-Direct orchestration was run on the 0.4.0 release candidate. Source review established that 0.4.1 changed native Grok metadata/schema constraints, not provider or fusion code. The artifact reports that review as provenance, not as a physical rerun.
+The direct receipts do not contain a source commit. Chronology identifies a post-run commit as a candidate; source diffing shows the external provider/orchestration implementation files match the tested 0.4.1 commit. This supports a compatibility claim only, not exact replay or exact source attribution.
 
 ## Checksums
 
 `scripts/verify_artifact.py --refresh` lists each non-circular payload file with size and SHA-256 and writes `checksums/SHA256SUMS`. The manifest and checksum file are anchored by the Git commit/tag.
+
+Separately, `scripts/tree_hash.py` computes `ri-tree-sha256-v1` over the published 102-file input list. The aggregate is SHA-256 of canonical JSON records containing relative path, executable-normalized mode, byte size, and raw-file SHA-256.

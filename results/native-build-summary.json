@@ -1,10 +1,11 @@
 {
   "attempts": 2,
+  "evidence_class": "operator_attested_curated_observation",
   "final_verdict": "pass",
   "known_cost_usd": 0.2574256,
   "requested_model": "grok-4.5",
   "requested_reasoning_effort": "high",
   "schema_version": 1,
   "served_model_telemetry": "grok-4.5-build",
-  "status": "pass_after_visible_cancelled_attempt"
+  "status": "operator_observed_pass_after_visible_cancelled_attempt"
 }

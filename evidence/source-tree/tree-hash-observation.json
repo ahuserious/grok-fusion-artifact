@@ -1,0 +1,18 @@
+{
+  "algorithm_id": "ri-tree-sha256-v1",
+  "historical_operator_recorded_tree_sha256": "b79e1624b60cad40a1f0995b15a7ee314aa353c3cf731187ee38843368cb9ffa",
+  "historical_value_reproducible_from_this_artifact": false,
+  "input_manifest": "evidence/source-tree/tree-hash-inputs.json",
+  "reproducible_tree_sha256": "6d255775b39d4694c8e344f404c76a4b1516922e93b7a23b8b9b540ce9e81031",
+  "schema_version": 1,
+  "source": {
+    "commit": "4c9c64712cf4d34cc7a221d04ce857260ac3dccb",
+    "git_tree": "1b5c10ef0835d8c6f5eb9db9aa45bac3e8d3e3c3",
+    "repository": "https://github.com/ahuserious/relentless-inception-grok"
+  },
+  "targets_observed_equal": [
+    "clean checkout at the source commit",
+    "local installed-plugin checkout reporting the same commit and Git tree"
+  ],
+  "verification_boundary": "The published per-file inputs make the aggregate reproducible. The local installed-tree observation is not cryptographically linked to the private native Grok Build sessions."
+}
